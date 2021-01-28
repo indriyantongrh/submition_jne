@@ -67,86 +67,86 @@ class _LoginState extends State<Login> {
               ),
             ),
             SizedBox(
-              height: 140,
+              height: 60,
             ),
             Expanded(
               child: Container(
-
                 decoration: BoxDecoration(
                     color: Colors.white70,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50),
                         topRight: Radius.circular(50),
                        )),
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
+                child: SingleChildScrollView(
+                  child:  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
                                   color: Colors.white70,
                                   borderRadius: BorderRadius.circular(10),
-                                  ),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey[100]))),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "Masukan NPP",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400],fontFamily: 'AirBnB'),
-                                          icon: const Padding(
-                                      padding: const EdgeInsets.only(top: 3.0),
-                                        child: const Icon(Icons.person))),
+                                ),
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color: Colors.grey[100]))),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Masukan NPP",
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey[400],fontFamily: 'AirBnB'),
+                                            icon: const Padding(
+                                                padding: const EdgeInsets.only(top: 3.0),
+                                                child: const Icon(Icons.person))),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        hintStyle: TextStyle(
-                                            color: Colors.grey[400],fontFamily: 'AirBnB'),
-                                          border: InputBorder.none,
-                                          hintText: "Password",
-                                          icon: const Padding(
-                                              padding: const EdgeInsets.only(top: 3.0),
-                                              child: const Icon(Icons.lock))),
-                                      validator: (val) => val.length < 6 ? 'Password too short.' : null,
-                                      onSaved: (val) => _password = val,
-                                      obscureText: _obscureText,
-                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey[400],fontFamily: 'AirBnB'),
+                                            border: InputBorder.none,
+                                            hintText: "Password",
+                                            icon: const Padding(
+                                                padding: const EdgeInsets.only(top: 3.0),
+                                                child: const Icon(Icons.lock))),
+                                        validator: (val) => val.length < 6 ? 'Password too short.' : null,
+                                        onSaved: (val) => _password = val,
+                                        obscureText: _obscureText,
+                                      ),
 
-                                  ),
-                                  new FlatButton(
-                                      onPressed: _toggle,
-                                      child: new Text(_obscureText ? "Lihat password" : "Sebunyikan password" , style: TextStyle(fontFamily: 'AirBnB'),))
-                                ],
+                                    ),
+                                    new FlatButton(
+                                        onPressed: _toggle,
+                                        child: new Text(_obscureText ? "Lihat password" : "Sebunyikan password" , style: TextStyle(fontFamily: 'AirBnB'),))
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Container(
+                              SizedBox(
                                 height: 50,
-                                margin: EdgeInsets.symmetric(horizontal: 30),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Color(0xFFFD540B)),
-                                child: Center(
+                              ),
+                              Container(
+                                  height: 50,
+                                  margin: EdgeInsets.symmetric(horizontal: 30),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Color(0xFFFD540B)),
+                                  child: Center(
                                     child: GestureDetector(
                                       onTap: (){
                                         setState(() {
@@ -157,42 +157,43 @@ class _LoginState extends State<Login> {
                                       },
                                       child: Text(
                                         "Masuk",
-                                          style: TextStyle(
-                                              fontFamily: 'AirBnB',
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20),
+                                        style: TextStyle(
+                                            fontFamily: 'AirBnB',
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
                                       ),
                                     ),
-                                  // child: Text(
-                                  //   "Masuk",
-                                  //   style: TextStyle(
-                                  //       fontFamily: 'AirBnB',
-                                  //       color: Colors.white,
-                                  //       fontWeight: FontWeight.bold,
-                                  //       fontSize: 20),
-                                  // ),
-                                )),
+                                    // child: Text(
+                                    //   "Masuk",
+                                    //   style: TextStyle(
+                                    //       fontFamily: 'AirBnB',
+                                    //       color: Colors.white,
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize: 20),
+                                    // ),
+                                  )),
 
-                            SizedBox(height: 50,),
+                              SizedBox(height: 50,),
 
-                            Container(
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                    "Ubah perangkat ?",
-                                    style: TextStyle(
-                                        fontFamily: 'AirBnB',
-                                        color: Colors.black87,
-                                        fontSize: 19),
-                                  ),
-                                )),
-                          ],
-                        ),
-                      )
-                    ],
+                              Container(
+                                  height: 50,
+                                  child: Center(
+                                    child: Text(
+                                      "Ubah perangkat ?",
+                                      style: TextStyle(
+                                          fontFamily: 'AirBnB',
+                                          color: Colors.black87,
+                                          fontSize: 19),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
+                )
               ),
             ),
           ],

@@ -1,3 +1,5 @@
+
+import 'package:bms_mobile/view/homepage/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -35,29 +37,40 @@ class _RoleSelectedState extends State<RoleSelected> {
         },
         itemBuilder: (context, index) {
           return
-               Card(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, bottom: 10, left: 20.0, right: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new CircleAvatar(
-                        backgroundImage: AssetImage("assets/icon_person.png"),
-                        backgroundColor: Colors.white70,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        europeanCountries[index],
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+              GestureDetector(
+                onTap:(){
+                  setState(() {
+                    Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (BuildContext context) => HomePage()));
+                  });
+                },
+                child:
+                Card(
+                  elevation: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 10, left: 20.0, right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new CircleAvatar(
+                          backgroundImage: AssetImage("assets/icon_person.png"),
+                          backgroundColor: Colors.white70,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          europeanCountries[index],
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
+
         },
         itemCount: europeanCountries.length,
       ),
