@@ -37,67 +37,29 @@ class _DataTablesState extends State<DataTables> {
         centerTitle: true,
         leading: new Container(),
       ),
-      body:Container(
-        child:
-
-            ListView(
+      body:FutureBuilder(
+        future: ApiProvider().fetchDataTables(),
+        builder: (context, snapshot){
+          if(!snapshot.hasData){
+            return Center(child: CircularProgressIndicator(),);
+          }
+          if (snapshot.hasData){
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              verticalDirection: VerticalDirection.down,
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child:    DataTable(
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text(
-                            'Nama',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'No Telepon',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Email',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Website',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Username',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                      ],
-                      rows: List<Modeltables>().map((e) =>
-                          DataRow(cells: [
-                            DataCell(Text(e.name)),
-                            DataCell(Text(e.phone)),
-                            DataCell(Text(e.email)),
-                            DataCell(Text(e.website)),
-                            DataCell(Text(e.username)),
-                          ]
-                          ),
-                      ).toList()
-                  ),
-                )
+                Expanded(child: Container(padding: EdgeInsets.all(5),
+                child: dataBody(snapshot.data),))
               ],
-            )
+            );
+          }
+          return Center();
+        },
+      )
 
-        )
+
       );
-
-
-
-
 
       // StreamBuilder(
       //   stream: bloc.listSuratObject,
@@ -114,9 +76,76 @@ class _DataTablesState extends State<DataTables> {
       // ),
 
 
-
-
   }
+}
+
+dataBody(List<Modeltables> listSales) {
+  return Container(
+    child: ListView(
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            sortColumnIndex: 0,
+            showCheckboxColumn: false,
+            columns: [
+              DataColumn(
+                  label: Text("Nama"),
+                  numeric: false,
+                  tooltip: "Nama"
+              ),
+              DataColumn(
+                label: Text("Username"),
+                numeric: false,
+                tooltip: "Username",
+              ),
+              DataColumn(
+                label: Text("Email"),
+                numeric: false,
+                tooltip: "email",
+              ),
+              DataColumn(
+                label: Text("Phone"),
+                numeric: false,
+                tooltip: "phone",
+              ),
+              DataColumn(
+                label: Text("Website"),
+                numeric: false,
+                tooltip: "website",
+              ),
+            ],
+            rows: listSales
+                .map(
+                  (sale) => DataRow(
+                  onSelectChanged: (b) {
+                    print(sale.username);
+                  },
+                  cells: [
+                    DataCell(
+                        Text(sale.name)
+                    ),
+                    DataCell(
+                      Text(sale.username),
+                    ),
+                    DataCell(
+                      Text(sale.email),
+                    ),
+                    DataCell(
+                      Text(sale.phone),
+                    ),
+                    DataCell(
+                      Text(sale.website),
+                    ),
+                  ]),
+            )
+                .toList(),
+          ),
+        )
+      ],
+    ),
+  );
+
 }
 
 // Widget buildList(AsyncSnapshot<List<Modeltables>> snapshot) {
