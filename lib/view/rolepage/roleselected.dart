@@ -1,5 +1,6 @@
 
-import 'package:bms_mobile/view/homepage/homepage.dart';
+import 'package:bms_mobile/menuutama.dart';
+import 'package:bms_mobile/view/home/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -41,7 +42,7 @@ class _RoleSelectedState extends State<RoleSelected> {
                 onTap:(){
                   setState(() {
                     Navigator.of(context).push(new MaterialPageRoute(
-                        builder: (BuildContext context) => HomePage()));
+                        builder: (BuildContext context) => MenuUtama()));
                   });
                 },
                 child:

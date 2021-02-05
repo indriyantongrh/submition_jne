@@ -34,7 +34,8 @@ class _LoginState extends State<Login> {
           //   Colors.orange[400]
           // ])
         ),
-        child: Column(
+        child:
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -144,8 +145,8 @@ class _LoginState extends State<Login> {
                                   height: 50,
                                   margin: EdgeInsets.symmetric(horizontal: 30),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Color(0xFFFD540B)),
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.redtelkomsel),
                                   child: Center(
                                     child: GestureDetector(
                                       onTap: (){

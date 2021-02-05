@@ -12,21 +12,22 @@ class Informationbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Parent(
-      child: Column(
+    return
+      Parent(
+      child: Stack(
         children: [
           GestureDetector(
             onTap: () {
               // Get.toNamed('/second');
             },
-            child: Container(
+            child:
+            Container(
               height: 150,
               width: double.infinity,
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        blurRadius: 5,
-                        color: Colors.black.withOpacity(0.5))
+                        blurRadius: 5, color: Colors.black.withOpacity(0.5))
                   ],
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
@@ -41,14 +42,18 @@ class Informationbox extends StatelessWidget {
             children: [
               Flexible(
                   child: Container(
+                    padding: EdgeInsets.all(5.0),
+                alignment: Alignment.bottomLeft,
                 child: Text(
                   title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
+
                   style: TextStyle(
+                      fontFamily: 'AirBnB',
                       color: Colors.white,
                       fontWeight: FontWeight.w400,
-                      fontSize: 18),
+                      fontSize: 15),
                 ),
               ))
             ],

@@ -21,7 +21,8 @@ class UpToDateCard extends StatelessWidget {
           colors: [beginColor, endColor]),
 
       //========image and content slide
-      child: Row(
+      child:
+      Row(
         children: [
           SizedBox(
             height: 82,

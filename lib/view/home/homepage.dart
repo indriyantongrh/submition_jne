@@ -1,6 +1,7 @@
 import 'dart:io';
 
 
+import 'package:bms_mobile/view/menu/datatabel.dart';
 import 'package:bms_mobile/view/widget/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.grey[300],
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -147,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 new CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: Colors.orangebni,
+                                  backgroundColor: Colors.redtelkomsel,
                                   child: CircleAvatar(
                                     radius: 36,
                                     backgroundColor: Colors.white70,
@@ -193,7 +194,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           SizedBox(
-                            height: 0,
+                            height: 10,
+
                           ),
 
 
@@ -205,15 +207,29 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                SizedBox(height: 10,),
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   margin: EdgeInsets.symmetric(horizontal: 20),
-                                  child: Text(
-                                    "Kategori Menu",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: 'AirBnB',
-                                        fontWeight: FontWeight.bold),
+                                  child:
+                                  Row(
+                                  children: [
+                                    Image(
+                                      image: AssetImage('assets/menu.png'),
+                                      height: 14,
+                                      width: 14,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Kategori Menu",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'AirBnB',
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                   ),
                                 ),
                                 Container(
@@ -224,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                                         crossAxisCount: 3,
                                         childAspectRatio: 3 / 2),
                                     children: [
-                                      _gridItem("assets/dataanalis.png", "Menu 1"),
+                                      _gridItem("assets/dataanalis.png", "Data Table"),
                                       _gridItem("assets/checklist.png", "Menu 2"),
                                       _gridItem("assets/archive.png", "Menu 3"),
                                       _gridItem("assets/dossier.png", "Menu 4"),
@@ -233,44 +249,6 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                 )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.symmetric(horizontal: 20),
-                                  child: Text(
-                                    "Informasi",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: 'AirBnB',
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  height: 250,
-                                  width: double.infinity,
-                                  child: PageView.builder(
-                                      controller: controller,
-                                      itemCount: travels.length,
-                                      itemBuilder: (context, index) =>
-                                          Container(
-                                            ///margin: (left),
-                                            child: travels[index],
-                                          )),
-                                )
-
                               ],
                             ),
                           ),
@@ -285,23 +263,37 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                SizedBox(height: 10,),
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   margin: EdgeInsets.symmetric(horizontal: 20),
-                                  child: Text(
-                                    "Informasi",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: 'AirBnB',
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  child:
+                                  Row(
+                                    children: [
+                                      Image(
+                                        image: AssetImage('assets/announce.png'),
+                                        height: 15,
+                                        width: 15,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Informasi Terkini",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'AirBnB',
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )
+
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+
                                 Container(
-                                  height: 250,
+                                  height: 180,
                                   width: double.infinity,
+
                                   child: PageView.builder(
                                       controller: controller,
                                       itemCount: travels.length,
@@ -311,10 +303,12 @@ class _HomePageState extends State<HomePage> {
                                             child: travels[index],
                                           )),
                                 )
-
                               ],
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
                     ],
@@ -329,9 +323,10 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-_gridItem(String image, String name) {
+_gridItem(String image, String name,) {
   return Column(
     children: [
+
       SizedBox(
         width: 50,
         height: 50,
