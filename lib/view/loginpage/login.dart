@@ -1,3 +1,6 @@
+
+import 'package:bms_mobile/bloc/loginbloc.dart';
+import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +10,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  //untuk memunculkan text input klarasi
+  TextEditingController etNpp = new TextEditingController();
+  TextEditingController etPassword = new TextEditingController();
+
   // Initially password is obscure
   bool _obscureText = true;
   String _password;
+  bool _validate;
+
+  static GlobalKey<ScaffoldState> scaffold_state =
+  new GlobalKey<ScaffoldState>();
+
   // Toggles the password show status
   void _toggle() {
     setState(() {
@@ -18,8 +30,24 @@ class _LoginState extends State<Login> {
   }
 
   @override
+  void initState() {
+    _validate = false;
+    ///bloc.fetchdataLogins();
+    ///ApiProvider.fetchLogin();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    etNpp.dispose();
+    etPassword.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffold_state,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -58,7 +86,7 @@ class _LoginState extends State<Login> {
                     height: 10,
                   ),
                   Text(
-                    "Welcome Back",
+                    "Selamat Datang Kembali",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -105,7 +133,14 @@ class _LoginState extends State<Login> {
                                               bottom: BorderSide(
                                                   color: Colors.grey[100]))),
                                       child: TextFormField(
+                                        controller: etNpp,
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (String user) {
+                                          ApiProvider.npp = user;
+                                        },
                                         decoration: InputDecoration(
+                                            errorText:
+                                            _validate ? "Masukan NPP anda" : null,
                                             border: InputBorder.none,
                                             hintText: "Masukan NPP",
                                             hintStyle: TextStyle(
@@ -118,10 +153,19 @@ class _LoginState extends State<Login> {
                                     Container(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
+                                        controller: etPassword,
+                                        onChanged: (String password) {
+                                          ApiProvider.password = password;
+                                        },
                                         decoration: InputDecoration(
+
+                                            errorText: _validate
+                                                ? "Masukan password anda"
+                                                : null,
                                             hintStyle: TextStyle(
                                                 color: Colors.grey[400],fontFamily: 'AirBnB'),
                                             border: InputBorder.none,
+
                                             hintText: "Password",
                                             icon: const Padding(
                                                 padding: const EdgeInsets.only(top: 3.0),
@@ -151,9 +195,21 @@ class _LoginState extends State<Login> {
                                     child: GestureDetector(
                                       onTap: (){
                                         setState(() {
-                                          ShowDialogLogin();
-                                          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                                              builder: (BuildContext context) => RoleSelected()));
+                                          setState(() {
+                                            etNpp.text.isEmpty
+                                                ? _validate = true
+                                                : _validate = false;
+                                            etPassword.text.isEmpty
+                                                ? _validate = true
+                                                : _validate = false;
+                                            if (etNpp.text.isNotEmpty &&
+                                                etPassword.text.isNotEmpty) {
+                                              ShowDialogLogin();
+                                            }
+                                          });
+                                          ///ShowDialogLogin();
+                                          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                                          //     builder: (BuildContext context) => RoleSelected()));
                                         });
                                       },
                                       child: Text(
@@ -208,10 +264,7 @@ class _LoginState extends State<Login> {
     showDialog(
         context: context,
         barrierDismissible: false,
-        // ignore: deprecated_member_use
 
-        // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-        //     builder: (BuildContext context) => selectRoles()));
         child: new Dialog(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: 60),
@@ -227,5 +280,28 @@ class _LoginState extends State<Login> {
             ),
           ),
         ));
+
+        await ApiProvider.fetchLogin();
+    new Future.delayed(new Duration(seconds: 1), () async {
+      Navigator.of(context, rootNavigator: true).pop();
+      await scaffold_state.currentState.showSnackBar(SnackBar(
+        content: Text(
+          ApiProvider.message,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: 'AirBnB'),
+        ),
+        duration: Duration(seconds: 2),
+      ));
+      if (ApiProvider.success == 1){
+        /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
+            builder: (BuildContext context) => SelectedRole()));*/
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(
+            builder: (BuildContext context) => RoleSelected()));
+      }else{
+        print(ApiProvider.message);
+      }
+
+      /// _LoginProcess();
+    });
   }
 }

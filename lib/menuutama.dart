@@ -1,5 +1,7 @@
 import 'package:bms_mobile/view/home/homepage.dart';
+import 'package:bms_mobile/view/menu/belanja.dart';
 import 'package:bms_mobile/view/menu/datatabel.dart';
+import 'package:bms_mobile/view/menu/setting.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
@@ -20,8 +22,8 @@ class _MenuUtamaState extends State<MenuUtama> {
   final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     DataTables(),
-    HomePage(),
-    HomePage(),
+    Belanja(),
+    Setting(),
   ];
 
 
@@ -38,7 +40,7 @@ class _MenuUtamaState extends State<MenuUtama> {
             title: Text('Beranda', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity_outlined),
+            icon: Icon(Icons.table_view_outlined),
             title: Text('Data Tabel', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
           ),
           BottomNavigationBarItem(
@@ -47,7 +49,7 @@ class _MenuUtamaState extends State<MenuUtama> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu_rounded),
-            title: Text('Menu', style: TextStyle(fontFamily: 'AirBnB' , fontWeight: FontWeight.bold),),
+            title: Text('Setting', style: TextStyle(fontFamily: 'AirBnB' , fontWeight: FontWeight.bold),),
           ),
         ],
         currentIndex: _selectedNavbar,

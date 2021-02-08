@@ -1,9 +1,9 @@
 import 'dart:io';
-
-
+import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/menu/datatabel.dart';
 import 'package:bms_mobile/view/widget/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:bms_mobile/bloc/dataUserBloc.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
- 
+    ///bloc.fetchdataUsers();
     super.initState();
   }
 
@@ -108,10 +108,10 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   Text(
-                    "INDRIYANTO NUGROHO",
+                    ApiProvider.name,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 26,
                         fontFamily: "airbnb"),
                   )
                 ],
@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                         LimitedBox(
                                           maxWidth: 250,
                                           child:   Text(
-                                            "INDRIYANTO NUGROHO",
+                                            ApiProvider.name,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontSize: 20,
@@ -179,12 +179,12 @@ class _HomePageState extends State<HomePage> {
                                         ),
 
                                         Text(
-                                          "Mobile Developers",
+                                          ApiProvider.jabatan,
                                           style: TextStyle(
                                               fontSize: 16, fontFamily: 'AirBnb'),
                                         ),
                                         Text(
-                                          "indriyantongrh@bni.co.id",
+                                          ApiProvider.email,
                                           style: TextStyle(
                                               fontSize: 16, fontFamily: 'AirBnb'),
                                         )
@@ -240,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                                         crossAxisCount: 3,
                                         childAspectRatio: 3 / 2),
                                     children: [
-                                      _gridItem("assets/dataanalis.png", "Data Table"),
+                                      _gridItem("assets/dataanalis.png", "Menu 1"),
                                       _gridItem("assets/checklist.png", "Menu 2"),
                                       _gridItem("assets/archive.png", "Menu 3"),
                                       _gridItem("assets/dossier.png", "Menu 4"),

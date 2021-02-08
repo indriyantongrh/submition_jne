@@ -37,6 +37,7 @@ dependencies:
   google_fonts: ^1.1.2
   provider: ^4.3.2
   json_table: ^1.4.0
+  shape_of_view: ^1.0.2
 
 dev_dependencies:
   flutter_test:
