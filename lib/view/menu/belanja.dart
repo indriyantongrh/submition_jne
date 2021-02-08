@@ -12,6 +12,12 @@ class _BelanjaState extends State<Belanja> {
       appBar: AppBar(
         title: Text("Belanja"),
         centerTitle: true,
+        leading: Container(),
+      ),
+      body: Container(
+        child: Center(
+          child: Text("Blank Page"),
+        ),
       ),
     );
   }
