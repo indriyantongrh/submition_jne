@@ -1,5 +1,5 @@
 import 'package:bms_mobile/view/home/homepage.dart';
-import 'package:bms_mobile/view/menu/belanja.dart';
+import 'package:bms_mobile/view/menu/information.dart';
 import 'package:bms_mobile/view/menu/datatabel.dart';
 import 'package:bms_mobile/view/menu/akun.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
@@ -44,8 +44,8 @@ class _MenuUtamaState extends State<MenuUtama> {
             title: Text('Data Tabel', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            title: Text('Belanja', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
+            icon: Icon(Icons.info_outline_rounded),
+            title: Text('Infromasi', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline_outlined),

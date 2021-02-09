@@ -2,6 +2,7 @@
 import 'package:bms_mobile/menuutama.dart';
 import 'package:bms_mobile/view/home/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RoleSelected extends StatefulWidget {
@@ -63,8 +64,7 @@ class _RoleSelectedState extends State<RoleSelected> {
                         ),
                         Text(
                           europeanCountries[index],
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),

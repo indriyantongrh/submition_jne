@@ -10,7 +10,7 @@ class _BelanjaState extends State<Belanja> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belanja"),
+        title: Text("Informasi"),
         centerTitle: true,
         leading: Container(),
       ),

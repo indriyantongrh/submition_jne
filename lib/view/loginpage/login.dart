@@ -2,6 +2,7 @@ import 'package:bms_mobile/bloc/loginbloc.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -77,21 +78,12 @@ class _LoginState extends State<Login> {
                 children: [
                   Text(
                     "Silahkan",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontFamily: "airbnb",
-                    ),
+                    style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w300, color: Color(0xFFFAFAFA))
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+
                   Text(
                     "Login",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
-                        fontFamily: "airbnb"),
+                    style:GoogleFonts.poppins(fontSize: 40, fontWeight: FontWeight.w400, color: Color(0xFFFAFAFA))
                   )
                 ],
               ),
@@ -145,9 +137,7 @@ class _LoginState extends State<Login> {
                                                   : null,
                                               border: InputBorder.none,
                                               hintText: "Masukan NPP",
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey[400],
-                                                  fontFamily: 'AirBnB'),
+                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
                                               icon: const Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -167,9 +157,7 @@ class _LoginState extends State<Login> {
                                               errorText: _validate
                                                   ? "Masukan password anda"
                                                   : null,
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey[400],
-                                                  fontFamily: 'AirBnB'),
+                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
                                               border: InputBorder.none,
                                               hintText: "Password",
                                               icon: const Padding(
@@ -192,7 +180,7 @@ class _LoginState extends State<Login> {
                                                 ? "Lihat password"
                                                 : "Sebunyikan password",
                                             style:
-                                                TextStyle(fontFamily: 'AirBnB'),
+                                                GoogleFonts.poppins()
                                           ))
                                     ],
                                   ),
@@ -231,11 +219,7 @@ class _LoginState extends State<Login> {
                                         },
                                         child: Text(
                                           "Masuk",
-                                          style: TextStyle(
-                                              fontFamily: 'AirBnB',
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20),
+                                          style: GoogleFonts.poppins(fontSize: 20 ,color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600)
                                         ),
                                       ),
                                     )),
@@ -247,10 +231,7 @@ class _LoginState extends State<Login> {
                                     child: Center(
                                       child: Text(
                                         "Ubah perangkat ?",
-                                        style: TextStyle(
-                                            fontFamily: 'AirBnB',
-                                            color: Colors.black87,
-                                            fontSize: 19),
+                                        style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w300)
                                       ),
                                     )),
                               ],
