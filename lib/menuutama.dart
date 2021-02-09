@@ -1,7 +1,7 @@
 import 'package:bms_mobile/view/home/homepage.dart';
 import 'package:bms_mobile/view/menu/belanja.dart';
 import 'package:bms_mobile/view/menu/datatabel.dart';
-import 'package:bms_mobile/view/menu/setting.dart';
+import 'package:bms_mobile/view/menu/akun.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
@@ -48,8 +48,8 @@ class _MenuUtamaState extends State<MenuUtama> {
             title: Text('Belanja', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_rounded),
-            title: Text('Setting', style: TextStyle(fontFamily: 'AirBnB' , fontWeight: FontWeight.bold),),
+            icon: Icon(Icons.person_outline_outlined),
+            title: Text('Akun', style: TextStyle(fontFamily: 'AirBnB' , fontWeight: FontWeight.bold),),
           ),
         ],
         currentIndex: _selectedNavbar,

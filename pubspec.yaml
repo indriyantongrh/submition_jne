@@ -38,6 +38,7 @@ dependencies:
   provider: ^4.3.2
   json_table: ^1.4.0
   shape_of_view: ^1.0.2
+  fluttertoast: ^7.1.6
 
 dev_dependencies:
   flutter_test:

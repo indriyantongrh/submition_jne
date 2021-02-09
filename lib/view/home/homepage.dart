@@ -4,6 +4,7 @@ import 'package:bms_mobile/view/menu/datatabel.dart';
 import 'package:bms_mobile/view/widget/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:bms_mobile/bloc/dataUserBloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -97,22 +98,15 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "Selamat $hari",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontFamily: "airbnb",
-                    ),
+                    style: GoogleFonts.poppins(fontSize: 30, color: Color(0xFFFFFFFF) , fontWeight: FontWeight.w200)
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
 
                   Text(
                     ApiProvider.name,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontFamily: "airbnb"),
+                      style: GoogleFonts.poppins(fontSize: 16, color: Color(0xFFFFFFFF) , fontWeight: FontWeight.w300)
                   )
                 ],
               ),
@@ -171,22 +165,17 @@ class _HomePageState extends State<HomePage> {
                                           child:   Text(
                                             ApiProvider.name,
                                             overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'AirBnb'),
+                                            style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600)
                                           ),
                                         ),
 
                                         Text(
                                           ApiProvider.jabatan,
-                                          style: TextStyle(
-                                              fontSize: 16, fontFamily: 'AirBnb'),
+                                          style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w300)
                                         ),
                                         Text(
                                           ApiProvider.email,
-                                          style: TextStyle(
-                                              fontSize: 16, fontFamily: 'AirBnb'),
+                                            style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w300)
                                         )
                                       ]),
                                 )
@@ -224,10 +213,8 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       "Kategori Menu",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'AirBnB',
-                                          fontWeight: FontWeight.bold),
+                                      style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600)
+
                                     ),
                                   ],
                                   ),
@@ -280,11 +267,9 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       Text(
                                         "Informasi Terkini",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'AirBnB',
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                        style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600)
+
+                          ),
                                     ],
                                   )
 

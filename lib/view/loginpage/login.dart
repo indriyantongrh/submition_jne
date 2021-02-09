@@ -1,4 +1,3 @@
-
 import 'package:bms_mobile/bloc/loginbloc.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
@@ -20,7 +19,7 @@ class _LoginState extends State<Login> {
   bool _validate;
 
   static GlobalKey<ScaffoldState> scaffold_state =
-  new GlobalKey<ScaffoldState>();
+      new GlobalKey<ScaffoldState>();
 
   // Toggles the password show status
   void _toggle() {
@@ -32,6 +31,8 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     _validate = false;
+    exitApps();
+
     ///bloc.fetchdataLogins();
     ///ApiProvider.fetchLogin();
     super.initState();
@@ -55,15 +56,15 @@ class _LoginState extends State<Login> {
             image: AssetImage("assets/background.webp"),
             fit: BoxFit.cover,
           ),
-         /// color: Color(0xFFFD540B),
+
+          /// color: Color(0xFFFD540B),
           //     gradient: LinearGradient(begin: Alignment.topCenter, colors: [
           //   Colors.orange[900],
           //   Colors.orange[800],
           //   Colors.orange[400]
           // ])
         ),
-        child:
-        Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -75,21 +76,21 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Login",
+                    "Silahkan",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: 20,
                       fontFamily: "airbnb",
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Text(
-                    "Selamat Datang Kembali",
+                    "Login",
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 40,
                         fontFamily: "airbnb"),
                   )
                 ],
@@ -100,158 +101,165 @@ class _LoginState extends State<Login> {
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white70,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50),
                         topRight: Radius.circular(50),
-                       )),
-                child: SingleChildScrollView(
-                  child:  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: Colors.white70,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey[100]))),
-                                      child: TextFormField(
-                                        controller: etNpp,
-                                        keyboardType: TextInputType.number,
-                                        onChanged: (String user) {
-                                          ApiProvider.npp = user;
-                                        },
-                                        decoration: InputDecoration(
-                                            errorText:
-                                            _validate ? "Masukan NPP anda" : null,
-                                            border: InputBorder.none,
-                                            hintText: "Masukan NPP",
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[400],fontFamily: 'AirBnB'),
-                                            icon: const Padding(
-                                                padding: const EdgeInsets.only(top: 3.0),
-                                                child: const Icon(Icons.person))),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: etPassword,
-                                        onChanged: (String password) {
-                                          ApiProvider.password = password;
-                                        },
-                                        decoration: InputDecoration(
-
-                                            errorText: _validate
-                                                ? "Masukan password anda"
-                                                : null,
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[400],fontFamily: 'AirBnB'),
-                                            border: InputBorder.none,
-
-                                            hintText: "Password",
-                                            icon: const Padding(
-                                                padding: const EdgeInsets.only(top: 3.0),
-                                                child: const Icon(Icons.lock))),
-                                        validator: (val) => val.length < 6 ? 'Password too short.' : null,
-                                        onSaved: (val) => _password = val,
-                                        obscureText: _obscureText,
-                                      ),
-
-                                    ),
-                                    new FlatButton(
-                                        onPressed: _toggle,
-                                        child: new Text(_obscureText ? "Lihat password" : "Sebunyikan password" , style: TextStyle(fontFamily: 'AirBnB'),))
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 50,
-                              ),
-                              Container(
-                                  height: 50,
-                                  margin: EdgeInsets.symmetric(horizontal: 30),
+                      )),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.redtelkomsel),
-                                  child: Center(
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        setState(() {
+                                    color: Colors.white70,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey[100]))),
+                                        child: TextFormField(
+                                          controller: etNpp,
+                                          keyboardType: TextInputType.number,
+                                          onChanged: (String user) {
+                                            ApiProvider.npp = user;
+                                          },
+                                          decoration: InputDecoration(
+                                              errorText: _validate
+                                                  ? "Masukan NPP anda"
+                                                  : null,
+                                              border: InputBorder.none,
+                                              hintText: "Masukan NPP",
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[400],
+                                                  fontFamily: 'AirBnB'),
+                                              icon: const Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3.0),
+                                                  child: const Icon(
+                                                      Icons.person))),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: etPassword,
+                                          onChanged: (String password) {
+                                            ApiProvider.password = password;
+                                          },
+                                          decoration: InputDecoration(
+                                              errorText: _validate
+                                                  ? "Masukan password anda"
+                                                  : null,
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[400],
+                                                  fontFamily: 'AirBnB'),
+                                              border: InputBorder.none,
+                                              hintText: "Password",
+                                              icon: const Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3.0),
+                                                  child:
+                                                      const Icon(Icons.lock))),
+                                          validator: (val) => val.length < 6
+                                              ? 'Password too short.'
+                                              : null,
+                                          onSaved: (val) => _password = val,
+                                          obscureText: _obscureText,
+                                        ),
+                                      ),
+                                      new FlatButton(
+                                          onPressed: _toggle,
+                                          child: new Text(
+                                            _obscureText
+                                                ? "Lihat password"
+                                                : "Sebunyikan password",
+                                            style:
+                                                TextStyle(fontFamily: 'AirBnB'),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Container(
+                                    height: 50,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 30),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.redtelkomsel),
+                                    child: Center(
+                                      child: GestureDetector(
+                                        onTap: () {
                                           setState(() {
-                                            etNpp.text.isEmpty
-                                                ? _validate = true
-                                                : _validate = false;
-                                            etPassword.text.isEmpty
-                                                ? _validate = true
-                                                : _validate = false;
-                                            if (etNpp.text.isNotEmpty &&
-                                                etPassword.text.isNotEmpty) {
-                                              ShowDialogLogin();
-                                            }
+                                            setState(() {
+                                              etNpp.text.isEmpty
+                                                  ? _validate = true
+                                                  : _validate = false;
+                                              etPassword.text.isEmpty
+                                                  ? _validate = true
+                                                  : _validate = false;
+                                              if (etNpp.text.isNotEmpty &&
+                                                  etPassword.text.isNotEmpty) {
+                                                ShowDialogLogin();
+                                              }
+                                            });
+
+                                            ///ShowDialogLogin();
+                                            // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                                            //     builder: (BuildContext context) => RoleSelected()));
                                           });
-                                          ///ShowDialogLogin();
-                                          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                                          //     builder: (BuildContext context) => RoleSelected()));
-                                        });
-                                      },
+                                        },
+                                        child: Text(
+                                          "Masuk",
+                                          style: TextStyle(
+                                              fontFamily: 'AirBnB',
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                    )),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Container(
+                                    height: 50,
+                                    child: Center(
                                       child: Text(
-                                        "Masuk",
+                                        "Ubah perangkat ?",
                                         style: TextStyle(
                                             fontFamily: 'AirBnB',
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
+                                            color: Colors.black87,
+                                            fontSize: 19),
                                       ),
-                                    ),
-                                    // child: Text(
-                                    //   "Masuk",
-                                    //   style: TextStyle(
-                                    //       fontFamily: 'AirBnB',
-                                    //       color: Colors.white,
-                                    //       fontWeight: FontWeight.bold,
-                                    //       fontSize: 20),
-                                    // ),
-                                  )),
-
-                              SizedBox(height: 50,),
-
-                              Container(
-                                  height: 50,
-                                  child: Center(
-                                    child: Text(
-                                      "Ubah perangkat ?",
-                                      style: TextStyle(
-                                          fontFamily: 'AirBnB',
-                                          color: Colors.black87,
-                                          fontSize: 19),
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        )
-                      ],
+                                    )),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ),
+                  )),
             ),
           ],
         ),
@@ -259,12 +267,11 @@ class _LoginState extends State<Login> {
     );
   }
 
-
+  /*Untuk show dialog login*/
   void ShowDialogLogin() async {
     showDialog(
         context: context,
         barrierDismissible: false,
-
         child: new Dialog(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: 60),
@@ -281,7 +288,7 @@ class _LoginState extends State<Login> {
           ),
         ));
 
-        await ApiProvider.fetchLogin();
+    await ApiProvider.fetchLogin();
     new Future.delayed(new Duration(seconds: 1), () async {
       Navigator.of(context, rootNavigator: true).pop();
       await scaffold_state.currentState.showSnackBar(SnackBar(
@@ -292,16 +299,39 @@ class _LoginState extends State<Login> {
         ),
         duration: Duration(seconds: 2),
       ));
-      if (ApiProvider.success == 1){
+      if (ApiProvider.success == 1) {
         /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => SelectedRole()));*/
         Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => RoleSelected()));
-      }else{
+      } else {
         print(ApiProvider.message);
       }
 
       /// _LoginProcess();
     });
+  }
+
+  /*Untuk Keluar aplikasi*/
+  void exitApps() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            title: Text('Alert'),
+            content: Text('Apakah anda yakin ingin keluar aplikasi ?'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("iya"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
