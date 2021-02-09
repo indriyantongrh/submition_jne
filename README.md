@@ -1,4 +1,4 @@
-# bms_mobile
+# Template Mobile Apps
 
 this application bms mobile
 
