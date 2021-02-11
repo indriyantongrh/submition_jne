@@ -27,7 +27,7 @@ class Informationbox extends StatelessWidget {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        blurRadius: 5, color: Colors.black.withOpacity(0.5))
+                        blurRadius: 5, color: Colors.white.withOpacity(0.5))
                   ],
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
