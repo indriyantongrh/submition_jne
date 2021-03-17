@@ -1,6 +1,6 @@
 # Template Mobile Apps
 
- using the flutter programming language, using the Bloc pattern model and RxDart in application development.
+ using the Dart programming language, using the Bloc pattern model and RxDart in application development.
 
  # Default Design UI
 

@@ -1,0 +1,1 @@
+final String UID = "admin" ;  // Imagine this is uid you will get from Authenticate System
