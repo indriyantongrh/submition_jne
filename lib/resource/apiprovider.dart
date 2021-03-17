@@ -61,7 +61,7 @@ class ApiProvider {
   Future <Modellogin> fetchDataLogin() async {
     print("masuk");
     final responseLogin =
-    await client.post("https://api.pasarburung.id/fieldtripkandri/logintest.php", body:{
+    await client.post("https://api-backup-pb.acarain.com/fieldtripkandri/logintest.php", body:{
       "email" : npp,
       "password" : password,
     }
@@ -78,7 +78,7 @@ class ApiProvider {
   }
   //API login example
   static fetchLogin() async{
-    http.post("https://api.pasarburung.id/fieldtripkandri/logintest.php", body:{
+    http.post("https://api-backup-pb.acarain.com/fieldtripkandri/logintest.php", body:{
       "email" : npp ,
       "password" : password,
     }).then((response) async {

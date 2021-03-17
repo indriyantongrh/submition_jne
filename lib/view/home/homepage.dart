@@ -1,6 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:bms_mobile/datamenu/const/const.dart';
+import 'package:bms_mobile/datamenu/dao/FavoriteDAO.dart';
+import 'package:bms_mobile/datamenu/database/database.dart';
 import 'package:bms_mobile/datamenu/datamenu.dart';
+import 'package:bms_mobile/datamenu/datamenu.dart';
+import 'package:bms_mobile/datamenu/favorite.dart';
+import 'package:bms_mobile/model/menumodel.dart';
 import 'package:bms_mobile/palettescolor/palettescolor.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/menu/datatabel.dart';
@@ -12,13 +18,40 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shape_of_view/shape_of_view.dart';
 
+Future <void>main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = await $FloorAppDatabase.databaseBuilder('edmt_favorites.db').build();
+  final dao = database.favoriteDao;
+  runApp(new MyApp(dao:dao));
+}
+
+class MyApp extends StatelessWidget {
+  final FavoriteDAO dao;
+  MyApp({this.dao});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+
+      home: new HomePage(dao:dao),
+    );
+  }
+}
+
 
 class HomePage extends StatefulWidget {
+  HomePage({Key key, this.dao});
+  final FavoriteDAO dao;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
+
+
 class _HomePageState extends State<HomePage> {
+
   PageController controller = PageController(initialPage: 0, viewportFraction: 0.8);
   String hari ;
   String pagi ="pagi";
@@ -29,6 +62,7 @@ class _HomePageState extends State<HomePage> {
 
 
   List<menuData> _menuServiceList = [];
+  final Set<menuData> _saved = new Set<menuData>();
 
   @override
   void initState() {
@@ -399,7 +433,6 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   height: 180,
                                   width: double.infinity,
-
                                   child: PageView.builder(
                                       controller: controller,
                                       itemCount: travels.length,
@@ -476,14 +509,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                     new Container(
                       height: 300.0,
-                      child: new GridView.builder(
+                      child:
+                      new GridView.builder(
                           physics: new NeverScrollableScrollPhysics(),
                           itemCount: _menuServiceList.length,
                           gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4),
                           itemBuilder: (context, position) {
                             return _rowMenuService(_menuServiceList[position]);
-                          }),
+                          }
+
+                          ),
                     ),
                   ],
                 )
@@ -494,6 +530,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _rowMenuService(menuData menuData) {
+    final bool alreadySaved = _saved.contains(menuData);
     return new Container(
       height: double.infinity,
       child: new Column(
@@ -539,25 +576,17 @@ class _HomePageState extends State<HomePage> {
               InkWell(
               onTap: (){
                 setState(() {
-                  if (menuData.favorit ){
-                    setState(() {
-                      //_toggleState = true;
-                      menuData.favorit = !menuData.favorit;
-                      print(menuData.favorit = !menuData.favorit);
-
-                    });
-                   // _toggleState = true;
-                  }else{
-                    setState(() {
-                      menuData.favorit = !menuData.favorit;
-
-                    });
+                  if (alreadySaved) {
+                    _saved.remove(menuData);
+                  } else {
+                    _saved.add(menuData);
                   }
                 });
               },
               child:  HeaderItem(
                 images: menuData.image,
                 title: menuData.name,
+
                 textcolor: Colors.grey[600],
               ) ,
             )
@@ -565,11 +594,54 @@ class _HomePageState extends State<HomePage> {
 
 
           ),
+          FutureBuilder(
+              future: checkFav(menuData),
+              builder: (context, snapshot){
+                if(snapshot.hasData)
+                  return IconButton(icon: Icon(Icons.favorite_border, color: Colors.red,),onPressed: null ,);
+                      else
+                        return IconButton(icon: Icon(Icons.favorite_border), onPressed: null);
+              })
         ],
       ),
     );
+
+
+
   }
 
+  Future<Favorite>checkFav (menuData item) async{
+    return await widget.dao.getFavInFavByUid(UID, item.id);
+  }
+  void _pushSaved() {
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _saved.map(
+                (menuData menuData) {
+              return new ListTile(
+                title: new Text(
+                  menuData.name,
+                ),
+              );
+            },
+          );
+          final List<Widget> divided = ListTile
+              .divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+              .toList();
+          return new Scaffold(
+            appBar: new AppBar(
+              title: const Text('Saved Suggestions'),
+            ),
+            body: new ListView(children: divided),
+          );
+        },
+      ),
+    );
+  }
   // void _insertValue(menuData menudata){
   //   List menu = _menuServiceList;
   //
@@ -597,6 +669,7 @@ _gridItem(String image, String name,) {
   );
 }
 
+
 class HeaderItem extends StatelessWidget {
   const HeaderItem({Key key, this.images, this.title, this.textcolor})
       : super(key: key);
@@ -604,10 +677,12 @@ class HeaderItem extends StatelessWidget {
   final String title;
   final Color textcolor;
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 80,
+      height: 100,
       child: Column(
         children: <Widget>[
           Image.asset(
@@ -620,7 +695,7 @@ class HeaderItem extends StatelessWidget {
           Text(
             title,
             style: TextStyle(color: textcolor ?? Colors.white),
-          )
+          ),
         ],
       ),
     );

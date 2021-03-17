@@ -1,5 +1,6 @@
 import 'package:bms_mobile/bloc/loginbloc.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
+import 'package:bms_mobile/view/loginpage/registertaken.dart';
 import 'package:bms_mobile/view/rolepage/roleselected.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -228,10 +229,18 @@ class _LoginState extends State<Login> {
                                 ),
                                 Container(
                                     height: 50,
-                                    child: Center(
-                                      child: Text(
-                                        "Ubah perangkat ?",
-                                        style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w300)
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        setState(() {
+                                          Navigator.of(context).push(new MaterialPageRoute(
+                                              builder: (BuildContext context) => RegisterTakenAja()));
+                                        });
+                                      },
+                                      child:  Center(
+                                        child: Text(
+                                            "Register TakenAja!",
+                                            style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w300)
+                                        ),
                                       ),
                                     )),
                               ],
