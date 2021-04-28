@@ -19,7 +19,7 @@ class ApiProvider {
   static int success;
   static String message;
   static Map data;
-  final _BaseUrl = "https://api.mocki.io/v1/5ce8761e";
+  final _BaseUrl = "https://jsonplaceholder.typicode.com/users";
 
   // API for get datatable
   Future<List<Modeltables>> fetchDataTables() async {
