@@ -19,7 +19,7 @@ class Modelmenu {
   int id;
   String name;
   String image;
-  bool favorit;
+  String favorit;
 
   factory Modelmenu.fromJson(Map<String, dynamic> json) => Modelmenu(
     id: json["id"],

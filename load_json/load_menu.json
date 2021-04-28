@@ -3,66 +3,73 @@
     "id" : 1,
     "name" : "menu 1",
     "image" : "assets/icon/balancesheet.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 2,
     "name" : "menu 2",
     "image" : "assets/icon/card.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 3,
     "name" : "menu 3",
     "image" : "assets/icon/decrease.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 4,
     "name" : "menu 4",
     "image" : "assets/icon/growth.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 5,
     "name" : "menu 5",
     "image" : "assets/icon/growth.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 6,
     "name" : "menu 6",
     "image" : "assets/icon/officesupplies.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 7,
     "name" : "menu 7",
     "image" : "assets/icon/piechart.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 8,
     "name" : "menu 8",
     "image" : "assets/icon/balancesheet.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 9,
     "name" : "menu 9",
     "image" : "assets/icon/speechbubble.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
     "id" : 10,
     "name" : "menu 10",
     "image" : "assets/icon/sharemoney.png",
-    "favorit" : false
+    "favorit" : "false"
   },
   {
-    "id" : 1,
+    "id" : 11,
     "name" : "menu 11",
+    "image" : "assets/icon/piechart.png",
+    "favorit" : "false"
+  },
+  {
+    "id" : 12,
+    "name" : "menu 12",
     "image" : "assets/icon/grid.png",
-    "favorit" : false
+    "favorit" : "false"
   }
+
 ]

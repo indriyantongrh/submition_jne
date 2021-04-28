@@ -144,7 +144,7 @@ class _$FavoriteDAO extends FavoriteDAO {
   }
 
   @override
-  Future<void> deleteFav(Favorite fav) async {
+  Future<int> deleteFav(Favorite fav) async {
     await _favoriteDeletionAdapter.delete(fav);
   }
 }
