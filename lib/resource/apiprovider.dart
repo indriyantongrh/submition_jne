@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:bms_mobile/model/model.dart';
+import 'package:bms_mobile/model/modeldetail.dart';
 import 'package:bms_mobile/model/modellogin.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/model/modeluser.dart';
@@ -11,14 +13,20 @@ class ApiProvider {
   Client client = Client();
   String jsonSample;
   static String name;
+  static String id;
+  static String namalengkap;
   static String username;
   static String email;
   static String jabatan;
   static String npp;
+  static String nik;
+  static String nomortelepon;
+  static String level;
   static String password;
   static int success;
   static String message;
   static Map data;
+  static String BASEURL = "http://api-backup-pb.acarain.com/api-jne/";
   final _BaseUrl = "https://jsonplaceholder.typicode.com/users";
 
   // API for get datatable
@@ -58,6 +66,33 @@ class ApiProvider {
     }
   }
 
+  // api get user
+  Future<List<Modeldetail>> fetchuserDetail() async {
+    print("masuk");
+    final responseUser =
+    await client.get(BASEURL+"detailuser.php?id="+id);
+    if (responseUser.statusCode == 200) {
+      print(responseUser.body);
+      final data = json.decode(responseUser.body);
+      print("Print string : ${data}");
+
+      id = data[0]["id"];
+      namalengkap = data[0]["namalengkap"];
+      email = data[0]["email"];
+      nik = data[0]["nik"];
+      nomortelepon = data[0]["nomortelepon"];
+      level = data[0]["level"];
+      password = data[0]["password"];
+
+      print(id);
+
+
+      return compute(modeldetailFromJson, responseUser.body);
+    } else {
+      print("Load gagal");
+    }
+  }
+
   Future <Modellogin> fetchDataLogin() async {
     print("masuk");
     final responseLogin =
@@ -78,19 +113,53 @@ class ApiProvider {
   }
   //API login example
   static fetchLogin() async{
-    http.post("https://api-backup-pb.acarain.com/fieldtripkandri/logintest.php", body:{
-      "email" : npp ,
+    http.post(BASEURL+"login.php", body:{
+      "nik" : nik ,
       "password" : password,
     }).then((response) async {
     print("Response Login body: ${response.body}");
     data = await json.decode(response.body);
         success = data["success"];
-      message = data["message"];
-      name = data["nama_lengkap"];
-    jabatan = data["jabatan"];
-    email = data["email"];
+        message = data["message"];
+        id = data["id"];
+        namalengkap = data["namalengkap"];
+        level = data["level"];
+        email = data["email"];
         print(success);
     });
 
+  }
+
+  static fetchregister() async{
+    http.post(BASEURL+"registeruser.php", body:{
+      "namalengkap" : namalengkap,
+      "email" : email,
+      "nomortelepon" : nomortelepon,
+      "password" : password,
+      "level" : level,
+      "nik" : nik,
+    }).then((response) async {
+      print("Response Login body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+    });
+  }
+
+  static fetchUpdateUser() async{
+    http.post(BASEURL+"updateuser.php", body:{
+      "id" : id,
+      "namalengkap" : namalengkap,
+      "email" : email,
+      "nomortelepon" : nomortelepon,
+      "nik" : nik,
+    }).then((response) async {
+      print("Response Login body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+    });
   }
 }

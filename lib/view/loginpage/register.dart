@@ -1,37 +1,39 @@
+
+
+import 'package:bms_mobile/resource/apiprovider.dart';
+import 'package:bms_mobile/view/loginpage/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bms_mobile/palettescolor/palettescolor.dart';
-import 'package:intl/intl.dart';
+import 'package:group_button/group_button.dart';
+import 'package:flutter/widgets.dart';
 
-class RegisterTakenAja extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _RegisterTakenAjaState createState() => _RegisterTakenAjaState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterTakenAjaState extends State<RegisterTakenAja> {
+class _RegisterState extends State<Register> {
 
   //untuk memunculkan text input klarasi
-  TextEditingController etNpp = new TextEditingController();
   TextEditingController etPassword = new TextEditingController();
   TextEditingController etDatebirth = new TextEditingController();
+  TextEditingController etNohp = new TextEditingController();
+  TextEditingController etName = new TextEditingController();
+  TextEditingController etNik = new TextEditingController();
+  TextEditingController etEmail = new TextEditingController();
+  TextEditingController etLevel = new TextEditingController();
 
   // Initially password is obscure
   bool _obscureText = true;
   String _password;
   bool _validate;
-  String dropdownValue = 'Pilih Jenis Kelamin';
-  /// Defaults to today's date.
-  DateTime _selectedDate = DateTime.now();
-  final formatDate = new DateFormat('yyyy-MM-dd');
+  static int valueLevel;
 
-  List <String> spinnerItems = [
-    'Pilih Jenis Kelamin',
-    'Laki-laki',
-    'Perempuan',
-  ];
 
-  static GlobalKey<ScaffoldState> scaffold_state =
-  new GlobalKey<ScaffoldState>();
+
+
+  static GlobalKey<ScaffoldState> scaffold_state_register = new GlobalKey<ScaffoldState>();
 
   // Toggles the password show status
   void _toggle() {
@@ -52,33 +54,19 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
 
   @override
   void dispose() {
-    etNpp.dispose();
+    etName.dispose();
+    etNik.dispose();
+    etEmail.dispose();
+    etNohp.dispose();
     etPassword.dispose();
+    etLevel.dispose();
     super.dispose();
   }
-
-  _selectDated(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate, // Refer step 1
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2040),
-    );
-    if (picked != null) {
-      _selectedDate = picked;
-      etDatebirth
-        ..text = formatDate.format(_selectedDate)
-        ..selection = TextSelection.fromPosition(TextPosition(
-            offset: etDatebirth.text.length,
-            affinity: TextAffinity.upstream));
-    }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     key: scaffold_state_register,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -99,7 +87,7 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      "Register TekenAja",
+                      "Register dulu",
                       style:GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.w400, color: Color(0xFFFAFAFA))
                   )
                 ],
@@ -136,34 +124,7 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                   ),
                                   child: Column(
                                     children: <Widget>[
-                                      //input email
-                                      Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey[100]))),
-                                        child: TextFormField(
-                                          controller: etNpp,
-                                          keyboardType: TextInputType.emailAddress,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
-                                          decoration: InputDecoration(
-                                              errorText: _validate
-                                                  ? "Masukan NPP anda"
-                                                  : null,
-                                              border: InputBorder.none,
-                                              hintText: "Email",
-                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
-                                              icon: const Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(
-                                                      top: 3.0),
-                                                  child: const Icon(
-                                                      Icons.mail_outline_rounded, color: PalettesColor.redtelkomsel,))),
-                                        ),
-                                      ),
+
                                       //input name
                                       Container(
                                         padding: EdgeInsets.all(8.0),
@@ -172,14 +133,14 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey[100]))),
                                         child: TextFormField(
-                                          //controller: etNpp,
+                                          controller: etName,
                                           keyboardType: TextInputType.name,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
+                                          onChanged: (String namalengkap) {
+                                            ApiProvider.namalengkap = namalengkap;
+                                          },
                                           decoration: InputDecoration(
                                               errorText: _validate
-                                                  ? "Masukan NPP anda"
+                                                  ? "Masukan nama lengkap anda"
                                                   : null,
                                               border: InputBorder.none,
                                               hintText: "Nama Lengkap",
@@ -192,93 +153,6 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                                     Icons.person_outline_outlined, color: PalettesColor.redtelkomsel,))),
                                         ),
                                       ),
-                                      //input gender
-                                      Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        child:
-                                        DropdownButton(
-                                          value: dropdownValue,
-                                          icon: Icon(Icons.arrow_drop_down),
-                                          iconSize: 24,
-                                          elevation: 16,
-                                          style: TextStyle(color: Colors.red, fontSize: 18),
-                                          underline: Container(
-                                            height: 2,
-                                            color: Colors.deepPurpleAccent,
-                                          ),
-                                          onChanged: (String data) {
-                                            setState(() {
-                                              dropdownValue = data;
-                                            });
-                                          },
-                                          items: spinnerItems.map<DropdownMenuItem<String>>((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-
-                                        )
-                                      ),
-                                      //input datetime
-                                      Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey[100]))),
-                                        child: TextFormField(
-                                          onTap: () {
-                                            _selectDated(context);
-                                          },
-                                          controller: etDatebirth,
-                                          keyboardType: TextInputType.name,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
-                                          decoration: InputDecoration(
-                                              errorText: _validate
-                                                  ? "Masukan NPP anda"
-                                                  : null,
-                                              border: InputBorder.none,
-                                              hintText: "Tanggal Lahir",
-                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
-                                              icon: const Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(
-                                                      top: 3.0),
-                                                  child: const Icon(
-                                                    Icons.date_range_outlined, color: PalettesColor.redtelkomsel,))),
-                                        ),
-                                      ),
-                                      //input place birth
-                                      Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey[100]))),
-                                        child: TextFormField(
-                                         /// controller: etNpp,
-                                          keyboardType: TextInputType.name,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
-                                          decoration: InputDecoration(
-                                              errorText: _validate
-                                                  ? "Masukan NPP anda"
-                                                  : null,
-                                              border: InputBorder.none,
-                                              hintText: "Tempat Lahir",
-                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
-                                              icon: const Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(
-                                                      top: 3.0),
-                                                  child: const Icon(
-                                                    Icons.place_rounded, color: PalettesColor.redtelkomsel,))),
-                                        ),
-                                      ),
                                       //input NIK
                                       Container(
                                         padding: EdgeInsets.all(8.0),
@@ -287,17 +161,17 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey[100]))),
                                         child: TextFormField(
-                                         /// controller: etNpp,
+                                           controller: etNik,
                                           keyboardType: TextInputType.number,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
+                                          onChanged: (String nik) {
+                                            ApiProvider.nik = nik;
+                                          },
                                           decoration: InputDecoration(
                                               errorText: _validate
-                                                  ? "Masukan NPP anda"
+                                                  ? "Masukan NIK anda"
                                                   : null,
                                               border: InputBorder.none,
-                                              hintText: "Masukan NIK",
+                                              hintText: "Masukan NIK anda",
                                               hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
                                               icon: const Padding(
                                                   padding:
@@ -305,6 +179,34 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                                       top: 3.0),
                                                   child: const Icon(
                                                     Icons.account_box_outlined, color: PalettesColor.redtelkomsel,))),
+                                        ),
+                                      ),
+                                      //input email
+                                      Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey[100]))),
+                                        child: TextFormField(
+                                          controller: etEmail,
+                                          keyboardType: TextInputType.emailAddress,
+                                          onChanged: (String email) {
+                                            ApiProvider.email = email;
+                                          },
+                                          decoration: InputDecoration(
+                                              errorText: _validate
+                                                  ? "Masukan email anda"
+                                                  : null,
+                                              border: InputBorder.none,
+                                              hintText: "Email",
+                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
+                                              icon: const Padding(
+                                                  padding:
+                                                  const EdgeInsets.only(
+                                                      top: 3.0),
+                                                  child: const Icon(
+                                                    Icons.mail_outline_rounded, color: PalettesColor.redtelkomsel,))),
                                         ),
                                       ),
                                       //input Mobile phone
@@ -315,14 +217,14 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey[100]))),
                                         child: TextFormField(
-                                          ///controller: etNpp,
+                                          controller: etNohp,
                                           keyboardType: TextInputType.number,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
+                                          onChanged: (String nomortelepon) {
+                                            ApiProvider.nomortelepon = nomortelepon;
+                                          },
                                           decoration: InputDecoration(
                                               errorText: _validate
-                                                  ? "Masukan NPP anda"
+                                                  ? "Masukan nomor handphone anda"
                                                   : null,
                                               border: InputBorder.none,
                                               hintText: "No Handphone",
@@ -335,67 +237,79 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                                     Icons.phone_android_rounded, color: PalettesColor.redtelkomsel,))),
                                         ),
                                       ),
+                                      Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: etPassword,
+                                          onChanged: (String password) {
+                                            ApiProvider.password = password;
+                                          },
+                                          decoration: InputDecoration(
+                                              errorText: _validate
+                                                  ? "Masukan password anda"
+                                                  : null,
+                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
+                                              border: InputBorder.none,
+                                              hintText: "Password",
+                                              icon: const Padding(
+                                                  padding:
+                                                  const EdgeInsets.only(
+                                                      top: 3.0),
+                                                  child:
+                                                  const Icon(Icons.lock, color: PalettesColor.redtelkomsel,))),
+                                          validator: (val) => val.length < 6
+                                              ? 'Password too short.'
+                                              : null,
+                                          onSaved: (val) => _password = val,
+                                          obscureText: _obscureText,
+                                        ),
+                                      ),
 
-                                      //input Alamat
+                                      //input Jabatan
                                       Container(
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.all(0),
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 bottom: BorderSide(
                                                     color: Colors.grey[100]))),
-                                        child: TextFormField(
-                                          ///controller: etNpp,
-                                          keyboardType: TextInputType.text,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
-                                          decoration: InputDecoration(
-                                              errorText: _validate
-                                                  ? "Masukan NPP anda"
-                                                  : null,
-                                              border: InputBorder.none,
-                                              hintText: "Masukan Alamat",
-                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
-                                              icon: const Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(
-                                                      top: 3.0),
-                                                  child: const Icon(
-                                                    Icons.place_outlined, color: PalettesColor.redtelkomsel,))),
+                                        child: Column(
+                                          children: [
+                                            Text(
+
+                                              'Pilih Jabatan',
+                                              style: TextStyle(fontSize: 15),
+                                            ),
+
+                                            GroupButton(
+
+                                              buttonHeight: 40,
+                                              buttonWidth: 150,
+                                              spacing: 10,
+                                              buttons: const [
+                                                'Pegawai',
+                                                'Manajer'
+                                              ],
+                                              selectedColor: Colors.redtelkomsel,
+                                              selectedBorderColor: Colors.amber,
+                                              borderRadius: BorderRadius.circular(10),
+                                              onSelected: (i, isSelected) => ApiProvider.level = '$i'
+
+                                                  // print('Button #$i selected'),
+
+                                            ),
+                                          ],
+                                        )
+
+
                                         ),
-                                      ),
-                                      //input Kode Pos
-                                      Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey[100]))),
-                                        child: TextFormField(
-                                          ///controller: etNpp,
-                                          keyboardType: TextInputType.number,
-                                          // onChanged: (String user) {
-                                          //   ApiProvider.npp = user;
-                                          // },
-                                          decoration: InputDecoration(
-                                              errorText: _validate
-                                                  ? "Masukan NPP anda"
-                                                  : null,
-                                              border: InputBorder.none,
-                                              hintText: "Masukan Kode Pos",
-                                              hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
-                                              icon: const Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(
-                                                      top: 3.0),
-                                                  child: const Icon(
-                                                    Icons.place_outlined, color: PalettesColor.redtelkomsel,))),
-                                        ),
-                                      ),
+
+
+
                                     ],
                                   ),
                                 ),
                                 SizedBox(height: 30,),
+                                //button registrer
                                 Container(
                                     height: 50,
                                     margin:
@@ -408,15 +322,15 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                         onTap: () {
                                           setState(() {
                                             setState(() {
-                                              etNpp.text.isEmpty
+                                              etName.text.isEmpty
                                                   ? _validate = true
                                                   : _validate = false;
                                               etPassword.text.isEmpty
                                                   ? _validate = true
                                                   : _validate = false;
-                                              if (etNpp.text.isNotEmpty &&
+                                              if (etNohp.text.isNotEmpty &&
                                                   etPassword.text.isNotEmpty) {
-                                                // ShowDialogLogin();
+                                                ShowDialogRegister();
                                               }
                                             });
 
@@ -428,6 +342,26 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
                                         child: Text(
                                             "Register",
                                             style: GoogleFonts.poppins(fontSize: 20 ,color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600)
+                                        ),
+                                      ),
+                                    )),
+
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Container(
+                                    height: 50,
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        setState(() {
+                                          Navigator.of(context).push(new MaterialPageRoute(
+                                              builder: (BuildContext context) => Login()));
+                                        });
+                                      },
+                                      child:  Center(
+                                        child: Text(
+                                            "Silahkan login",
+                                            style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w300)
                                         ),
                                       ),
                                     )),
@@ -444,6 +378,58 @@ class _RegisterTakenAjaState extends State<RegisterTakenAja> {
         ),
       ),
     );
+  }
+
+  /*Untuk show dialog login*/
+  void ShowDialogRegister() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: new Dialog(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 60),
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: new CircularProgressIndicator(),
+                ),
+                new Text("     Loading..."),
+              ],
+            ),
+          ),
+        ));
+
+    print(ApiProvider.email);
+    print(ApiProvider.namalengkap);
+    print(ApiProvider.nik);
+    print(ApiProvider.nomortelepon);
+    print(ApiProvider.password);
+    print(ApiProvider.level);
+
+    await ApiProvider.fetchregister();
+    new Future.delayed(new Duration(seconds: 1), () async {
+      Navigator.of(context, rootNavigator: true).pop();
+      await scaffold_state_register.currentState.showSnackBar(SnackBar(
+        content: Text(
+          ApiProvider.message,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: 'AirBnB'),
+        ),
+        duration: Duration(seconds: 2),
+      ));
+      if (ApiProvider.success == 1) {
+        /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
+            builder: (BuildContext context) => SelectedRole()));*/
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(
+            builder: (BuildContext context) => Login()));
+      } else {
+        print(ApiProvider.message);
+      }
+
+
+    });
   }
 }
 

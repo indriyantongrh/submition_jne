@@ -1,7 +1,8 @@
 import 'package:bms_mobile/bloc/loginbloc.dart';
+import 'package:bms_mobile/menuutama.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
-import 'package:bms_mobile/view/loginpage/registertaken.dart';
-import 'package:bms_mobile/view/rolepage/roleselected.dart';
+import 'package:bms_mobile/view/loginpage/register.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,7 +13,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   //untuk memunculkan text input klarasi
-  TextEditingController etNpp = new TextEditingController();
+  TextEditingController etNik = new TextEditingController();
   TextEditingController etPassword = new TextEditingController();
 
   // Initially password is obscure
@@ -42,7 +43,7 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    etNpp.dispose();
+    etNik.dispose();
     etPassword.dispose();
     super.dispose();
   }
@@ -127,17 +128,17 @@ class _LoginState extends State<Login> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey[100]))),
                                         child: TextFormField(
-                                          controller: etNpp,
+                                          controller: etNik,
                                           keyboardType: TextInputType.number,
-                                          onChanged: (String user) {
-                                            ApiProvider.npp = user;
+                                          onChanged: (String nik) {
+                                            ApiProvider.nik = nik;
                                           },
                                           decoration: InputDecoration(
                                               errorText: _validate
-                                                  ? "Masukan NPP anda"
+                                                  ? "Masukan NIK anda"
                                                   : null,
                                               border: InputBorder.none,
-                                              hintText: "Masukan NPP",
+                                              hintText: "Masukan NIK anda",
                                               hintStyle: GoogleFonts.poppins(color: Color(0xFFBDBDBD)),
                                               icon: const Padding(
                                                   padding:
@@ -201,13 +202,13 @@ class _LoginState extends State<Login> {
                                         onTap: () {
                                           setState(() {
                                             setState(() {
-                                              etNpp.text.isEmpty
+                                              etNik.text.isEmpty
                                                   ? _validate = true
                                                   : _validate = false;
                                               etPassword.text.isEmpty
                                                   ? _validate = true
                                                   : _validate = false;
-                                              if (etNpp.text.isNotEmpty &&
+                                              if (etNik.text.isNotEmpty &&
                                                   etPassword.text.isNotEmpty) {
                                                 ShowDialogLogin();
                                               }
@@ -233,12 +234,12 @@ class _LoginState extends State<Login> {
                                       onTap: (){
                                         setState(() {
                                           Navigator.of(context).push(new MaterialPageRoute(
-                                              builder: (BuildContext context) => RegisterTakenAja()));
+                                              builder: (BuildContext context) => Register()));
                                         });
                                       },
                                       child:  Center(
                                         child: Text(
-                                            "Register TakenAja!",
+                                            "Register disini!",
                                             style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w300)
                                         ),
                                       ),
@@ -293,7 +294,7 @@ class _LoginState extends State<Login> {
         /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => SelectedRole()));*/
         Navigator.of(context).pushReplacement(new MaterialPageRoute(
-            builder: (BuildContext context) => RoleSelected()));
+            builder: (BuildContext context) => MenuUtama()));
       } else {
         print(ApiProvider.message);
       }

@@ -63,6 +63,8 @@ class _HomePageState extends State<HomePage> {
   String siang = "siang";
   String sore = "sore";
   String malam = "malam";
+  String dataLevel;
+  bool visibilityTag = false;
   bool _toggleState = false;
 
   List<menuData> _menuServiceList = [];
@@ -70,36 +72,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // _menuServiceList.add(new menuData(
-    //     id: 1, name: 'menu 1', image: 'assets/icon/balancesheet.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 2, name: 'menu 2', image: 'assets/icon/card.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 3, name: 'menu 3', image: 'assets/icon/decrease.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 5, name: 'menu 4', image: 'assets/icon/growth.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 5, name: 'menu 5', image: 'assets/icon/growth.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 6, name: 'menu 6', image: 'assets/icon/officesupplies.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 7, name: 'menu 7', image: 'assets/icon/piechart.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 8, name: 'menu 8', image: 'assets/icon/sharemoney.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 9, name: 'menu 9', image: 'assets/icon/speechbubble.png', favorit: false
-    // ));
-    // _menuServiceList.add(new menuData(
-    //     id: 10, name: 'menu 10', image: 'assets/icon/grid.png', favorit: true
-    // ));
+
 
     super.initState();
   }
@@ -149,6 +122,16 @@ class _HomePageState extends State<HomePage> {
       print("malem");
     }
 
+    if(ApiProvider.level == "1"){
+      dataLevel = "Manajer";
+      visibilityTag = true;
+        print(ApiProvider.level);
+    }else{
+      dataLevel = "Pegawai";
+      visibilityTag = false;
+      print(ApiProvider.level);
+    }
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -176,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(ApiProvider.name,
+                  Text(ApiProvider.namalengkap,
                       style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Color(0xFFFFFFFF),
@@ -235,21 +218,18 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           LimitedBox(
                                             maxWidth: 250,
-                                            child: Text(ApiProvider.name,
+                                            child: Text(ApiProvider.namalengkap,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 20,
                                                     fontWeight:
                                                         FontWeight.w600)),
                                           ),
-                                          Text(ApiProvider.jabatan,
+
+                                          Text(dataLevel,
                                               style: GoogleFonts.poppins(
-                                                  fontSize: 14,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w300)),
-                                          Text(ApiProvider.email,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w300))
                                         ]),
                                   )
                                 ],
@@ -283,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                                         SizedBox(
                                           width: 8,
                                         ),
-                                        Text("Favorite Menu",
+                                        Text("Menu",
                                             style: GoogleFonts.poppins(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600)),
@@ -300,36 +280,44 @@ class _HomePageState extends State<HomePage> {
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
-                                          images:
-                                              'assets/icon/balancesheet.png',
-                                          title: 'Menu 1',
+                                          id: 1,
+                                          images: 'assets/icon/balancesheet.png',
+                                          title: 'Absensi',
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
+                                          id: 2,
                                           images: 'assets/icon/decrease.png',
-                                          title: 'Menu 2',
+                                          title: 'Daily Report',
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
+                                          id: 3,
                                           images: 'assets/icon/growth.png',
-                                          title: 'Menu 3',
+                                          title: 'History Absensi',
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
+
+                                      Visibility(
+                                        visible: visibilityTag,
+                                        child:
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
+                                          id: 4,
                                           images: 'assets/icon/piechart.png',
-                                          title: 'menu 4',
+                                          title: 'Monitoring Absensi',
                                           textcolor: Colors.grey[600],
                                         ),
-                                      ),
+                                      ),)
+
                                     ],
                                   ),
                                   SizedBox(
@@ -339,27 +327,32 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      InkWell(
+                                      Visibility(
+                                        visible: visibilityTag,
+                                        child:  InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
+                                          id: 5,
                                           images: 'assets/icon/card.png',
-                                          title: 'Menu 5',
+                                          title: 'Monitoring Daily Report',
+                                          textcolor: Colors.grey[600],
+                                        ),
+                                      ),
+                                      ),
+
+                                      InkWell(
+                                        onTap: () {},
+                                        child: HeaderItem(
+                                          images: '',
+                                          title: '',
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
-                                          images: 'assets/icon/sharemoney.png',
-                                          title: 'Menu 6',
-                                          textcolor: Colors.grey[600],
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: HeaderItem(
-                                          images: 'assets/icon/upload.png',
-                                          title: 'Menu 7',
+                                          images: '',
+                                          title: '',
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
@@ -368,8 +361,8 @@ class _HomePageState extends State<HomePage> {
                                           _showBottomsheetMenu(context);
                                         },
                                         child: HeaderItem(
-                                          images: 'assets/icon/grid.png',
-                                          title: 'Lainnya',
+                                          images: '',
+                                          title: '',
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
@@ -608,67 +601,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Widget _rowMenuService(menuData menuData) {
-  //   return new Container(
-  //     height: double.infinity,
-  //     child: new Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: <Widget>[
-  //         new GestureDetector(
-  //           behavior: HitTestBehavior.opaque,
-  //           onTap: () {
-  //             showModalBottomSheet<void>(
-  //                 builder: (context) {
-  //                   return _showBottomsheetMenu(context);
-  //                 });
-  //           },
-  //           // child: FutureBuilder(
-  //           //   future: DefaultAssetBundle
-  //           //       .of(context)
-  //           //       .loadString('load_json/load_menu.json'),
-  //           //   builder: (context, snapshot){
-  //           //     var myData = JsonDecoder().convert(snapshot.data.toString());
-  //           //     return ListView.builder(
-  //           //         itemBuilder: (BuildContext context, int index){
-  //           //           return  InkWell(
-  //           //             onTap: (){
-  //           //
-  //           //             },
-  //           //             child:  HeaderItem(
-  //           //               images: myData[index]['image'],
-  //           //               title: myData[index]['name'],
-  //           //               textcolor: Colors.grey[600],
-  //           //             ) ,
-  //           //           );
-  //           //
-  //           //         },
-  //           //         itemCount: myData == null ? 0 : myData,
-  //           //     );
-  //           //
-  //           //   },
-  //           //
-  //           // )
-  //
-  //
-  //             child:
-  //             InkWell(
-  //             onTap: (){
-  //               setState(() {
-  //                 MasukanFav(Modelmenu());
-  //                 print("Kliked");
-  //               });
-  //             },
-  //             child:  HeaderItem(
-  //               images: menuData.image,
-  //               title: menuData.name,
-  //               textcolor: Colors.grey[600],
-  //             ) ,
-  //           )
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+
 
   // untuk menambah favorite ke database
   void MasukanFav(Modelmenu modelmenu) async {
@@ -708,19 +641,20 @@ Future<List<Modelmenu>> readJson() async {
 
 ////  untuk Menampikan icon dan nama icon
 class HeaderItem extends StatelessWidget {
-  const HeaderItem({Key key, this.images, this.title, this.textcolor, this.dao})
+  const HeaderItem({Key key, this.images, this.title, this.textcolor, this.dao, this.id})
       : super(key: key);
   final String images;
   final String title;
   final Color textcolor;
+  final int id;
 
   final FavoriteDAO dao;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 80,
-        height: 80,
+        width: 100,
+        height: 100,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -735,6 +669,7 @@ class HeaderItem extends StatelessWidget {
                 ),
                 Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: textcolor ?? Colors.white),
                 ),
               ],

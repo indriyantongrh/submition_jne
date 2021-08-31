@@ -1,4 +1,6 @@
 
+import 'package:bms_mobile/model/model.dart';
+import 'package:bms_mobile/model/modeldetail.dart';
 import 'package:bms_mobile/model/modellogin.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/model/modeluser.dart';
@@ -15,5 +17,8 @@ class Repository{
 
   //untuk ambil data user
   Future <Modellogin> fetctuserLogin() => apiProvider.fetchDataLogin();
+
+  //untuk ambil data user
+  Future <List<Modeldetail>> fetctuserDetail() => apiProvider.fetchuserDetail();
 
 }

@@ -7,19 +7,17 @@ import 'package:bms_mobile/model/modeluser.dart';
 import 'package:bms_mobile/resource/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class LoginBloc{
+class detailUserbloc{
   final _repository = Repository();
-  final _userObject = PublishSubject <Modellogin>();
+  final _userObject = PublishSubject <List<Modeldetail>>();
 
-  Observable <Modellogin> get dataObjectLogin => _userObject.stream;
-  fetchdataLogins() async {
-    Modellogin LoginRes = await _repository.fetctuserLogin();
-    _userObject.sink.add(LoginRes);
+  Observable <List<Modeldetail>> get dataObjectLogin => _userObject.stream;
+  fetchdataDetail() async {
+    List<Modeldetail> detailRes = await _repository.fetctuserDetail();
+    _userObject.sink.add(detailRes);
   }
   dispose(){
     _userObject.close();
   }
 }
-
-final bloc = LoginBloc();
-
+final blocDetail = detailUserbloc();

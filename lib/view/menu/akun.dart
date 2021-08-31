@@ -1,5 +1,6 @@
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/loginpage/login.dart';
+import 'package:bms_mobile/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shape_of_view/shape_of_view.dart';
@@ -13,6 +14,8 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   static GlobalKey<ScaffoldState> scaffold_state =  new GlobalKey<ScaffoldState>();
 
+  String dataLevel;
+
   void ClickMenu(){
     scaffold_state.currentState.showSnackBar(SnackBar(
       content: Text(
@@ -25,6 +28,13 @@ class _SettingState extends State<Setting> {
   }
   @override
   Widget build(BuildContext context) {
+    if(ApiProvider.level == 0){
+      dataLevel = "Pegawai";
+    }else{
+      dataLevel = "Manajer";
+    }
+
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -87,16 +97,16 @@ class _SettingState extends State<Setting> {
                   ),
                   Center(
                     child: Text(
-                        ApiProvider.name,
+                        ApiProvider.namalengkap,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500)
                     ),
                   ),
                   Center(
                     child: Text(
-                        ApiProvider.email,
+                        dataLevel,
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(fontSize: 14)
+                        style: GoogleFonts.poppins(fontSize: 16)
                     ),
                   ),
 
@@ -107,10 +117,11 @@ class _SettingState extends State<Setting> {
                         padding: EdgeInsets.only(left: 20),
                         child: GestureDetector(
                           onTap: (){
-                            ClickMenu();
+                            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                                builder: (BuildContext context) => profile()));
                           },
                           child: Text(
-                              "Menu Option 1",
+                              "Profile",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(fontSize:16,fontWeight: FontWeight.w500 )
                           ),
@@ -137,7 +148,7 @@ class _SettingState extends State<Setting> {
 
                           },
                           child: Text(
-                              "Menu Option 2",
+                              "Update Password",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(fontSize:16 ,fontWeight: FontWeight.w500)
                           ),
@@ -154,87 +165,7 @@ class _SettingState extends State<Setting> {
                     ],
                   ),
                   Divider(color: Colors.grey, height:40, indent: 20,),
-                  Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 20),
-                        child: GestureDetector(
-                          onTap: (){
-                            ClickMenu();
 
-                          },
-                          child: Text(
-                              "Menu Option 3",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(fontSize:16, fontWeight: FontWeight.w500 )
-                          ),
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.only(right: 15),
-                          alignment: Alignment.centerRight,
-                          child: Align(
-                              alignment: Alignment.centerRight,
-                              child:  Icon(Icons.arrow_forward_ios,)
-                          )
-                      ),
-                    ],
-                  ),
-                  Divider(color: Colors.grey[300], thickness: 7,height: 60,),
-                  Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 20),
-                        child: GestureDetector(
-                          onTap: (){
-                            ClickMenu();
-
-                          },
-                          child: Text(
-                              "Menu Option 4",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(fontSize:16,fontWeight: FontWeight.w500 )
-                          ),
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.only(right: 15),
-                          alignment: Alignment.centerRight,
-                          child: Align(
-                              alignment: Alignment.centerRight,
-                              child:  Icon(Icons.arrow_forward_ios,)
-                          )
-                      ),
-                    ],
-                  ),
-                  Divider(color: Colors.grey, height:40, indent: 20,),
-                  Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 20),
-                        child: GestureDetector(
-                          onTap: (){
-                            ClickMenu();
-
-                          },
-                          child: Text(
-                              "Menu Option 5",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(fontSize:16 , fontWeight: FontWeight.w500)
-                          ),
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.only(right: 15),
-                          alignment: Alignment.centerRight,
-                          child: Align(
-                              alignment: Alignment.centerRight,
-                              child:  Icon(Icons.arrow_forward_ios,)
-                          )
-                      ),
-                    ],
-                  ),
-                  Divider(color: Colors.grey[300], thickness: 7,height: 60,),
 
                   Center(
                       child: GestureDetector(
