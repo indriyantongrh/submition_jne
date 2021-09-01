@@ -28,7 +28,7 @@ class _SettingState extends State<Setting> {
   }
   @override
   Widget build(BuildContext context) {
-    if(ApiProvider.level == 0){
+    if(ApiProvider.level == "0"){
       dataLevel = "Pegawai";
     }else{
       dataLevel = "Manajer";
@@ -170,8 +170,10 @@ class _SettingState extends State<Setting> {
                   Center(
                       child: GestureDetector(
                         onTap: (){
-                          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                              builder: (BuildContext context) => Login()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  profile()));
+
+                          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                          //     builder: (BuildContext context) => Login()));
                         },
                         child: Text(
                           "Logout",

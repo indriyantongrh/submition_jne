@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:bms_mobile/view/absensi/absensi.dart';
 import 'package:bms_mobile/view/menu/menufavorite.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:bms_mobile/datamenu/const/const.dart';
@@ -278,7 +279,9 @@ class _HomePageState extends State<HomePage> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  absensi()));
+                                        },
                                         child: HeaderItem(
                                           id: 1,
                                           images: 'assets/icon/balancesheet.png',

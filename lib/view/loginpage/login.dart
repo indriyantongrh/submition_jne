@@ -280,7 +280,7 @@ class _LoginState extends State<Login> {
         ));
 
     await ApiProvider.fetchLogin();
-    new Future.delayed(new Duration(seconds: 1), () async {
+    new Future.delayed(new Duration(seconds: 3), () async {
       Navigator.of(context, rootNavigator: true).pop();
       await scaffold_state.currentState.showSnackBar(SnackBar(
         content: Text(

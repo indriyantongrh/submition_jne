@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:bms_mobile/model/model.dart';
+import 'package:bms_mobile/model/modelabsendetail.dart';
 import 'package:bms_mobile/model/modeldetail.dart';
 import 'package:bms_mobile/model/modellogin.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/model/modeluser.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Client;
 import 'package:http/http.dart' as http;
 
@@ -22,12 +24,24 @@ class ApiProvider {
   static String nik;
   static String nomortelepon;
   static String level;
+  static String datetime;
+  static String hari;
+  static String checkin;
+  static String checkin_2;
+  static String checkout;
+  static String checkout_2;
+  static String keterangan;
   static String password;
+  static String id_absen;
+
   static int success;
   static String message;
   static Map data;
   static String BASEURL = "http://api-backup-pb.acarain.com/api-jne/";
   final _BaseUrl = "https://jsonplaceholder.typicode.com/users";
+
+  static GlobalKey<ScaffoldState> scaffold_state = new GlobalKey<ScaffoldState>();
+
 
   // API for get datatable
   Future<List<Modeltables>> fetchDataTables() async {
@@ -160,6 +174,95 @@ class ApiProvider {
       success = data["success"];
       message = data["message"];
       print(success);
+
+      // await scaffold_state.currentState.showSnackBar(SnackBar(
+      //     content: Text(
+      //       ApiProvider.message,
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontFamily: 'AirBnB'),
+      //     ),
+      //     duration: Duration(seconds: 2),
+      //
+      // ));
+    });
+  }
+
+  static fetchAbsensi() async{
+    http.post(BASEURL+"insertabsen.php", body:{
+      "id" : id,
+      "datetime" : datetime,
+      "hari" : hari,
+      "checkin" : checkin,
+      "keterangan" : keterangan,
+      "status" : "1",
+    }).then((response) async {
+      print("Response Login body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+      //
+      //  scaffold_state.currentState.showSnackBar(SnackBar(
+      //     content: Text(
+      //       message,
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontFamily: 'AirBnB'),
+      //     ),
+      //     duration: Duration(seconds: 2),
+      //
+      // ));
+    });
+  }
+
+  // api get user
+  Future<List<Modelabsendetail>> fetchabsenDetail() async {
+    print("masuk");
+    final responseUser =
+    await client.get(BASEURL+"getabsensi.php?id="+id+"&datetime="+datetime);
+    if (responseUser.statusCode == 200) {
+      print(responseUser.body);
+      final data = json.decode(responseUser.body);
+      print("Print string : ${data}");
+
+      id = data[0]["id"];
+      id_absen = data[0]["id_absen"];
+      checkin_2 = data[0]["checkin"];
+      checkout_2 = data[0]["checkout"];
+      keterangan = data[0]["keterangan"];
+
+
+      print(id);
+
+
+      return compute(modelabsendetailFromJson, responseUser.body);
+    } else {
+      print("Load gagal");
+    }
+  }
+
+  static fetchUpdateAbsen() async{
+    http.post(BASEURL+"updateabsensi.php", body:{
+      "id" : id,
+      "datetime" : datetime,
+      "checkout" : checkout,
+      "status" : "2",
+
+    }).then((response) async {
+      print("Response update body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+
+      // await scaffold_state.currentState.showSnackBar(SnackBar(
+      //     content: Text(
+      //       ApiProvider.message,
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontFamily: 'AirBnB'),
+      //     ),
+      //     duration: Duration(seconds: 2),
+      //
+      // ));
     });
   }
 }

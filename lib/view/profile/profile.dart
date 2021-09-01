@@ -2,11 +2,15 @@ import 'package:bms_mobile/bloc/dataUserBloc.dart';
 import 'package:bms_mobile/bloc/detailUserbloc.dart';
 import 'package:bms_mobile/palettescolor/palettescolor.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
+import 'package:bms_mobile/view/home/homepage.dart';
 import 'package:bms_mobile/view/loginpage/login.dart';
+import 'package:bms_mobile/view/menu/akun.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:shape_of_view/shape_of_view.dart';
+
+import '../../menuutama.dart';
 
 class profile extends StatefulWidget {
   @override
@@ -33,6 +37,7 @@ class _profileState extends State<profile> {
 
 
   void initState() {
+    blocDetail.fetchdataDetail();
     _validate = false;
 
     blocDetail.fetchdataDetail();
@@ -55,7 +60,6 @@ class _profileState extends State<profile> {
 
 
 
-  static GlobalKey<ScaffoldState> scaffold_state_register = new GlobalKey<ScaffoldState>();
 
   static GlobalKey<ScaffoldState> scaffold_state =  new GlobalKey<ScaffoldState>();
 
@@ -80,11 +84,11 @@ class _profileState extends State<profile> {
     }
 
     setState(() {
+      blocDetail.fetchdataDetail();
       etName.text = ApiProvider.namalengkap;
       etEmail.text = ApiProvider.email;
       etNik.text = ApiProvider.nik;
       etNohp.text = ApiProvider.nomortelepon;
-      etPassword.text = ApiProvider.level;
     });
 
 
@@ -92,15 +96,25 @@ class _profileState extends State<profile> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+        appBar: new AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) => MenuUtama())),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
         key: scaffold_state,
         body: Container(
+
             child: SingleChildScrollView(
               child:   Stack(
+
                 children: [
                   Container(
                     height: height,
                   ),
-
                   //Untuk Mengubah Gambar background
                   ShapeOfView(
                     shape: ArcShape(
@@ -341,19 +355,8 @@ class _profileState extends State<profile> {
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  setState(() {
-                                    etName.text.isEmpty
-                                        ? _validate = true
-                                        : _validate = false;
-                                    etPassword.text.isEmpty
-                                        ? _validate = true
-                                        : _validate = false;
-                                    if (etNohp.text.isNotEmpty &&
-                                        etPassword.text.isNotEmpty) {
-                                      ShowDialogupdate();
-                                    }
-                                  });
 
+                                  ShowDialogupdate();
                                   ///ShowDialogLogin();
                                   // Navigator.of(context).pushReplacement(new MaterialPageRoute(
                                   //     builder: (BuildContext context) => RoleSelected()));
@@ -405,33 +408,72 @@ class _profileState extends State<profile> {
     // print(ApiProvider.level);
 
     await ApiProvider.fetchUpdateUser();
-    new Future.delayed(new Duration(seconds: 1), () async {
+
+
+    new Future.delayed(new Duration(seconds: 3), () async {
       Navigator.of(context, rootNavigator: true).pop();
-      await scaffold_state_register.currentState.showSnackBar(SnackBar(
+      await scaffold_state.currentState.showSnackBar(SnackBar(
         content: Text(
           ApiProvider.message,
           textAlign: TextAlign.center,
           style: TextStyle(fontFamily: 'AirBnB'),
         ),
-        duration: Duration(seconds: 2),
+        // duration: Duration(seconds: 2),
       ));
-      print(ApiProvider.message);
-      // if (ApiProvider.success == 1) {
-      //   await scaffold_state_register.currentState.showSnackBar(SnackBar(
-      //     content: Text(
-      //       ApiProvider.message,
-      //       textAlign: TextAlign.center,
-      //       style: TextStyle(fontFamily: 'AirBnB'),
+      if(ApiProvider.success == 1){
+        Future.delayed(Duration(seconds: 1), (){
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) => MenuUtama()));
+        });
+      }
+      // if(ApiProvider.success == 1){
+      //   await AlertDialog(
+      //     title: const Text('Sukses'),
+      //     content: new Column(
+      //       mainAxisSize: MainAxisSize.min,
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: <Widget>[
+      //         Text("Hello"),
+      //         Container(
+      //             height: 50,
+      //             margin:
+      //             EdgeInsets.symmetric(horizontal: 30),
+      //             decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(10),
+      //                 color: Colors.redtelkomsel),
+      //             child: Center(
+      //               child: GestureDetector(
+      //                 onTap: () {
+      //                   setState(() {
+      //
+      //                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
+      //                         builder: (BuildContext context) => Setting()));
+      //                     ///ShowDialogLogin();
+      //                     // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+      //                     //     builder: (BuildContext context) => RoleSelected()));
+      //                   });
+      //                 },
+      //                 child: Text(
+      //                     "Kembali",
+      //                     style: GoogleFonts.poppins(fontSize: 20 ,color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600)
+      //                 ),
+      //               ),
+      //             )),
+      //       ],
       //     ),
-      //     duration: Duration(seconds: 2),
-      //   ));
-      //   /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
-      //       builder: (BuildContext context) => SelectedRole()));*/
-      //   // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-      //   //     builder: (BuildContext context) => Login()));
-      // } else {
-      //   print(ApiProvider.message);
+      //     actions: <Widget>[
+      //       new FlatButton(
+      //         onPressed: () {
+      //           Navigator.of(context).pop();
+      //         },
+      //         textColor: Theme.of(context).primaryColor,
+      //         child: const Text('Close'),
+      //       ),
+      //     ],
+      //   );
       // }
+      print("massage : "+ApiProvider.message);
+
 
 
     });

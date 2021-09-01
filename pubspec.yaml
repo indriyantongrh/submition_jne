@@ -44,6 +44,11 @@ dependencies:
   drag_and_drop_lists: ^0.2.10
   custom_radio_grouped_button: any
   group_button: any
+  circle_button: ^1.0.1
+  slide_countdown_clock: ^1.0.3
+  slide_digital_clock: any
+  analog_clock: ^0.0.1
+  intl: ^0.15.8
 
 
 dev_dependencies:

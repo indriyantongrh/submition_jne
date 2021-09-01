@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "14.0.0"
+  analog_clock:
+    dependency: "direct main"
+    description:
+      name: analog_clock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   analyzer:
     dependency: transitive
     description:
@@ -113,6 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  circle_button:
+    dependency: "direct main"
+    description:
+      name: circle_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   cli_util:
     dependency: transitive
     description:
@@ -325,12 +339,12 @@ packages:
     source: hosted
     version: "3.1.4"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.15.8"
   io:
     dependency: transitive
     description:
@@ -581,6 +595,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slide_countdown_clock:
+    dependency: "direct main"
+    description:
+      name: slide_countdown_clock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  slide_digital_clock:
+    dependency: "direct main"
+    description:
+      name: slide_digital_clock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   source_gen:
     dependency: transitive
     description:
