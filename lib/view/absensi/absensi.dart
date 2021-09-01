@@ -313,6 +313,7 @@ class _absensiState extends State<absensi> {
         ));
 
     print(ApiProvider.datetime);
+    print(ApiProvider.id);
     print(ApiProvider.checkin);
     print(ApiProvider.checkout);
     print(ApiProvider.keterangan);

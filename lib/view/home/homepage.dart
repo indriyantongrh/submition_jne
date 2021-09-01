@@ -307,19 +307,16 @@ class _HomePageState extends State<HomePage> {
                                           textcolor: Colors.grey[600],
                                         ),
                                       ),
-
-                                      Visibility(
-                                        visible: visibilityTag,
-                                        child:
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
-                                          id: 4,
-                                          images: 'assets/icon/piechart.png',
-                                          title: 'Monitoring Absensi',
+                                          id: 3,
+                                          images: 'assets/icon/growth.png',
+                                          title: 'History daily report',
                                           textcolor: Colors.grey[600],
                                         ),
-                                      ),)
+                                      ),
+
 
                                     ],
                                   ),
@@ -343,14 +340,18 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       ),
 
-                                      InkWell(
-                                        onTap: () {},
-                                        child: HeaderItem(
-                                          images: '',
-                                          title: '',
-                                          textcolor: Colors.grey[600],
-                                        ),
-                                      ),
+                                      Visibility(
+                                        visible: visibilityTag,
+                                        child:
+                                        InkWell(
+                                          onTap: () {},
+                                          child: HeaderItem(
+                                            id: 4,
+                                            images: 'assets/icon/piechart.png',
+                                            title: 'Monitoring Absensi',
+                                            textcolor: Colors.grey[600],
+                                          ),
+                                        ),),
                                       InkWell(
                                         onTap: () {},
                                         child: HeaderItem(
