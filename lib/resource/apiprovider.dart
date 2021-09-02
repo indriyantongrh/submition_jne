@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bms_mobile/model/model.dart';
 import 'package:bms_mobile/model/modelabsendetail.dart';
 import 'package:bms_mobile/model/modeldetail.dart';
+import 'package:bms_mobile/model/modelhistoryabsensi.dart';
 import 'package:bms_mobile/model/modellogin.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/model/modeluser.dart';
@@ -19,6 +20,11 @@ class ApiProvider {
   static String namalengkap;
   static String username;
   static String email;
+  static String projectName;
+  static String activity;
+  static String progress;
+  static String urgent;
+  // static String datetime;
   static String jabatan;
   static String npp;
   static String nik;
@@ -55,7 +61,7 @@ class ApiProvider {
       return compute(modeltablesFromJson, response.body);
     } else {
       print("Load gagal");
-      print(_BaseUrl);
+     // print(_BaseUrl);
     }
   }
 
@@ -265,5 +271,43 @@ class ApiProvider {
       //
       // ));
     });
+  }
+
+  static fetchDailyReport() async{
+    http.post(BASEURL+"insertdailyreport.php", body:{
+      "id" : id,
+      "projectName" : projectName,
+      "activity" : activity,
+      "progress" : progress,
+      "urgent" : urgent,
+      "datetime" : datetime,
+      "hari" : hari,
+    }).then((response) async {
+      print("Response Login body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+      print("Id anda: "+id);
+
+    });
+  }
+
+
+
+  // API for get datatable
+  Future<List<Modelhitoryabsensi>> fetchHistoryAbsen() async {
+    print("masuk hisrtoy");
+    print(BASEURL+"gethistoryabsensi.php?id="+id);
+    final response = await client.get(BASEURL+"gethistoryabsensi.php?id="+id);
+    if (response.statusCode == 200) {
+      print(response.body);
+      jsonSample = (response.body);
+
+      return compute(modelhitoryabsensiFromJson, response.body);
+    } else {
+      print("Load gagal");
+      //print(BASEURL+"gethistoryabsensi.php?id="+id);
+    }
   }
 }

@@ -36,11 +36,8 @@ class _BelanjaState extends State<Belanja> {
         leading: Container(),
       ),
       body: Column(
-
         children: [
-
           Expanded(
-
             child: PageView.builder(
               scrollDirection: Axis.vertical,
                 controller: controller,

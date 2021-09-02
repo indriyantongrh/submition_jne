@@ -49,6 +49,7 @@ dependencies:
   slide_digital_clock: any
   analog_clock: ^0.0.1
   intl: ^0.15.8
+  datetime_picker_formfield: any
 
 
 dev_dependencies:

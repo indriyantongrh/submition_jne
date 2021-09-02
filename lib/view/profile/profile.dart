@@ -106,7 +106,8 @@ class _profileState extends State<profile> {
           elevation: 0.0,
         ),
         key: scaffold_state,
-        body: Container(
+        body:
+        Container(
 
             child: SingleChildScrollView(
               child:   Stack(

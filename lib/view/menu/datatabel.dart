@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:bms_mobile/bloc/datatablesbloc.dart';
+import 'package:bms_mobile/bloc/historyabsensibloc.dart';
+import 'package:bms_mobile/model/modelhistoryabsensi.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,8 @@ class _DataTablesState extends State<DataTables> {
 @override
   void initState() {
     // TODO: implement initState
-    bloc.fetchdataTabelss();
-    var _dataTable = bloc.fetchdataTabelss();
+  blocHistory.fetchHistoryabsensi();
+
     super.initState();
   }
 
@@ -32,13 +34,18 @@ class _DataTablesState extends State<DataTables> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Data Tabel"),
-        centerTitle: true,
-        leading: new Container(),
-      ),
+        appBar: new AppBar(
+          centerTitle: true,
+          title: Text("History Absensi", style: TextStyle(color: Colors.white),),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.pop(context),
+          ),
+          backgroundColor: Colors.lightBlue,
+          elevation: 0.0,
+        ),
       body:FutureBuilder(
-        future: ApiProvider().fetchDataTables(),
+        future: ApiProvider().fetchHistoryAbsen(),
         builder: (context, snapshot){
           if(!snapshot.hasData){
             return Center(child: CircularProgressIndicator(),);
@@ -61,25 +68,10 @@ class _DataTablesState extends State<DataTables> {
 
       );
 
-      // StreamBuilder(
-      //   stream: bloc.listSuratObject,
-      //   builder: (context, AsyncSnapshot <List<Modeltables>> snapshot) {
-      //     if (snapshot.hasData) {
-      //       return buildList(snapshot);
-      //     } else if (snapshot.hasError) {
-      //       return Text(snapshot.error.toString());
-      //     }
-      //     return Center(
-      //       child: CircularProgressIndicator(),
-      //     );
-      //   },
-      // ),
-
-
   }
 }
 
-dataBody(List<Modeltables> listSales) {
+dataBody(List<Modelhitoryabsensi> listSales) {
   return Container(
     child: ListView(
       children: [
@@ -90,52 +82,52 @@ dataBody(List<Modeltables> listSales) {
             showCheckboxColumn: false,
             columns: [
               DataColumn(
-                  label: Text("Nama"),
+                  label: Text("Hari"),
                   numeric: false,
-                  tooltip: "Nama"
+                  tooltip: "Hari"
               ),
               DataColumn(
-                label: Text("Username"),
+                label: Text("Tanggal"),
                 numeric: false,
-                tooltip: "Username",
+                tooltip: "Tanggal",
               ),
               DataColumn(
-                label: Text("Email"),
+                label: Text("Checkin"),
                 numeric: false,
-                tooltip: "email",
+                tooltip: "Checkin",
               ),
               DataColumn(
-                label: Text("Phone"),
+                label: Text("Checkout"),
                 numeric: false,
-                tooltip: "phone",
+                tooltip: "Checkout",
               ),
               DataColumn(
-                label: Text("Website"),
+                label: Text("Keterangan"),
                 numeric: false,
-                tooltip: "website",
+                tooltip: "Keterangan",
               ),
             ],
             rows: listSales
                 .map(
                   (sale) => DataRow(
                   onSelectChanged: (b) {
-                    print(sale.username);
+                    print(sale.hari);
                   },
                   cells: [
                     DataCell(
-                        Text(sale.name)
+                        Text(sale.hari)
                     ),
                     DataCell(
-                      Text(sale.username),
+                      Text(sale.datetime),
                     ),
                     DataCell(
-                      Text(sale.email),
+                      Text(sale.checkout),
                     ),
                     DataCell(
-                      Text(sale.phone),
+                      Text(sale.checkout),
                     ),
                     DataCell(
-                      Text(sale.website),
+                      Text(sale.keterangan),
                     ),
                   ]),
             )

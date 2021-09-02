@@ -122,6 +122,8 @@ class _absensiState extends State<absensi> {
           child: Column(
             children: [
               SizedBox(height: 20,),
+              Text("e - Absensi" ,style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30, fontFamily: 'AirBnB') ,),
+              SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
 

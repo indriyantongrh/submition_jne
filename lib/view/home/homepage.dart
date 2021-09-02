@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:bms_mobile/view/absensi/absensi.dart';
+import 'package:bms_mobile/view/dailyreport/dailyreport.dart';
+import 'package:bms_mobile/view/historyabsensi/datatabel.dart';
 import 'package:bms_mobile/view/menu/menufavorite.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:bms_mobile/datamenu/const/const.dart';
@@ -290,7 +292,9 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  dailyreport()));
+                                        },
                                         child: HeaderItem(
                                           id: 2,
                                           images: 'assets/icon/decrease.png',
@@ -299,7 +303,9 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  DataTables()));
+                                        },
                                         child: HeaderItem(
                                           id: 3,
                                           images: 'assets/icon/growth.png',
