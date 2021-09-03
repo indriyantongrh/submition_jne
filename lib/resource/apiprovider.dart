@@ -10,6 +10,7 @@ import 'package:bms_mobile/model/modelhistoryreport.dart';
 import 'package:bms_mobile/model/modellogin.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/model/modeluser.dart';
+import 'package:bms_mobile/model/modelusers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Client;
@@ -438,6 +439,61 @@ class ApiProvider {
       //
       // ));
     });
+  }
+
+  // API for get data users
+  Future<List<Modelusers>> fetchUsers() async {
+
+    print("masuk hisrtoy");
+    print(BASEURL+"gethistorydaily.php");
+    final response = await client.get(BASEURL+"getusers.php");
+    if (response.statusCode == 200) {
+      print(response.body);
+      jsonSample = (response.body);
+
+      return compute(modelusersFromJson, response.body);
+    } else {
+      print("Load gagal");
+      //print(BASEURL+"gethistoryabsensi.php?id="+id);
+    }
+  }
+
+  // API for get datatable
+  Future<List<Modelhitoryabsensi>> fetchMonitoringAbsen(String idKaryawan) async {
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idKaryawan = preff.getString("idKaryawan");
+    print("masuk hisrtoy");
+
+    final response = await http.post(BASEURL+"gethistoryabsensi.php?id="+idKaryawan);
+    if (response.statusCode == 200) {
+      print(response.body);
+      print("id history absen Apiprovider:"+idKaryawan);
+      jsonSample = (response.body);
+
+      return compute(modelhitoryabsensiFromJson, response.body);
+    } else {
+      print("Load gagal");
+      //print(BASEURL+"gethistoryabsensi.php?id="+id);
+    }
+  }
+// API for get datatable
+  Future<List<Modelhitoryreport>> fetchMonitoringReport(String idKaryawan) async {
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idKaryawan = preff.getString("idKaryawan");
+
+
+    print("masuk hisrtoy");
+    print(BASEURL+"gethistorydaily.php?id="+idKaryawan);
+    final response = await client.get(BASEURL+"gethistorydaily.php?id="+idKaryawan);
+    if (response.statusCode == 200) {
+      print(response.body);
+      jsonSample = (response.body);
+
+      return compute(modelhitoryreportFromJson, response.body);
+    } else {
+      print("Load gagal");
+      //print(BASEURL+"gethistoryabsensi.php?id="+id);
+    }
   }
 
 }

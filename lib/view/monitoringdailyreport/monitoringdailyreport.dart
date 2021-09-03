@@ -1,6 +1,9 @@
 import 'package:bms_mobile/bloc/historyreportbloc.dart';
 import 'package:bms_mobile/model/modelhistoryreport.dart';
+import 'package:bms_mobile/model/modelusers.dart';
 import 'package:bms_mobile/view/dailyreport/detailreport.dart';
+import 'package:bms_mobile/view/monitoringabsensi/loadmonitoringabsensi.dart';
+import 'package:bms_mobile/view/monitoringdailyreport/loadmonitoringdaily.dart';
 import 'package:f_datetimerangepicker/f_datetimerangepicker.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -17,12 +20,12 @@ import 'package:json_table/json_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class historydaily extends StatefulWidget {
+class monitoringdailyreport extends StatefulWidget {
   @override
-  _historydailyState createState() => _historydailyState();
+  _monitoringdailyreportState createState() => _monitoringdailyreportState();
 }
 
-class _historydailyState extends State<historydaily> {
+class _monitoringdailyreportState extends State<monitoringdailyreport> {
 
   String idUsers="";
   void getValue() async{
@@ -57,7 +60,7 @@ class _historydailyState extends State<historydaily> {
     return Scaffold(
         appBar: new AppBar(
           centerTitle: true,
-          title: Text("History Absensi", style: TextStyle(color: Colors.white),),
+          title: Text("Monitoring Daily Report", style: TextStyle(color: Colors.white),),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.pop(context),
@@ -68,8 +71,8 @@ class _historydailyState extends State<historydaily> {
         body:
 
 
-        FutureBuilder <List<Modelhitoryreport>>(
-          future: ApiProvider().fetchHistoryReport(idUsers),
+        FutureBuilder <List<Modelusers>>(
+          future: ApiProvider().fetchUsers(),
           builder: (context, snapshot){
             if(!snapshot.hasData ){
               return Center(child: CircularProgressIndicator(),);
@@ -80,7 +83,7 @@ class _historydailyState extends State<historydaily> {
               return Center(child: Text("Kosong"),);
             }
             if (snapshot.hasData){
-              List<Modelhitoryreport> data = snapshot.data;
+              List<Modelusers> data = snapshot.data;
               return
                 ListView.builder(
                     itemCount: data.length,
@@ -88,18 +91,12 @@ class _historydailyState extends State<historydaily> {
                       return
                         GestureDetector(
                             onTap: () async{
-                              ApiProvider.idReport = data[index].idReport;
-                              ApiProvider.projectName   = data[index].projectName;
-                              ApiProvider.activity   = data[index].activity;
-                              ApiProvider.datetime   = data[index].datetime;
-                              ApiProvider.progress   = data[index].progress;
-                              ApiProvider.urgent   = data[index].urgent;
+                              ApiProvider.urgent   = data[index].id;
                               SharedPreferences preff = await SharedPreferences.getInstance();
-                              await preff.setString("idReports", data[index].idReport);
-                              print(data[index].idReport);
-
+                              await preff.setString("idKaryawan", data[index].id);
+                              // print(data[index].idReport);
                               Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (BuildContext context) => detailreport()));
+                                  builder: (BuildContext context) => loadmonitoringdaily()));
                             },
                             child: Container(
                               height: 100,
@@ -111,8 +108,18 @@ class _historydailyState extends State<historydaily> {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                       child:  Row(
-
                                         children: [
+                                          new CircleAvatar(
+                                            radius: 30,
+                                            backgroundColor: Colors.redtelkomsel,
+                                            child: CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: Colors.white70,
+                                              backgroundImage:
+                                              AssetImage("assets/peson.png"),
+                                            ),
+                                          ),
+                                          SizedBox(width: 10,),
 
                                           Column(
 
@@ -120,7 +127,7 @@ class _historydailyState extends State<historydaily> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                data[index].projectName,
+                                                data[index].namalengkap,
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold,
@@ -133,7 +140,7 @@ class _historydailyState extends State<historydaily> {
                                               Row(
                                                 children: [
                                                   Text(
-                                                    data[index].progress,
+                                                    data[index].email,
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 12
                                                     ),
@@ -156,7 +163,7 @@ class _historydailyState extends State<historydaily> {
                                         child: Align(
                                           alignment: Alignment.centerRight,
                                           child:   Text(
-                                            data[index].datetime,
+                                            data[index].jabatan,
                                             textAlign: TextAlign.right,
                                             style: GoogleFonts.poppins(
                                               fontSize: 20,
@@ -166,7 +173,6 @@ class _historydailyState extends State<historydaily> {
                                           ),
                                         )
                                     ),
-
                                   ],
                                 ),
                               ),

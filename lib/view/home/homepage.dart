@@ -5,6 +5,8 @@ import 'package:bms_mobile/view/dailyreport/dailyreport.dart';
 import 'package:bms_mobile/view/dailyreport/historydaily.dart';
 import 'package:bms_mobile/view/historyabsensi/datatabel.dart';
 import 'package:bms_mobile/view/menu/menufavorite.dart';
+import 'package:bms_mobile/view/monitoringabsensi/monitoringabsensi.dart';
+import 'package:bms_mobile/view/monitoringdailyreport/monitoringdailyreport.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:bms_mobile/datamenu/const/const.dart';
 import 'package:bms_mobile/datamenu/dao/FavoriteDAO.dart';
@@ -374,7 +376,10 @@ class _HomePageState extends State<HomePage> {
                                       Visibility(
                                         visible: visibilityTag,
                                         child:  InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  monitoringdailyreport()));
+
+                                        },
                                         child: HeaderItem(
                                           id: 5,
                                           images: 'assets/icon/card.png',
@@ -388,7 +393,10 @@ class _HomePageState extends State<HomePage> {
                                         visible: visibilityTag,
                                         child:
                                         InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  monitoringabsensi()));
+
+                                          },
                                           child: HeaderItem(
                                             id: 4,
                                             images: 'assets/icon/piechart.png',
