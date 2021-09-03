@@ -7,6 +7,7 @@ import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DataTables extends StatefulWidget {
   @override
@@ -15,12 +16,22 @@ class DataTables extends StatefulWidget {
 
 class _DataTablesState extends State<DataTables> {
 
+  String idUsers="";
+  Future getValue() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      idUsers = pref.getString("idUsers");
+    });
+
+  }
 
 @override
   void initState() {
     // TODO: implement initState
-  blocHistory.fetchHistoryabsensi();
-
+  ApiProvider().fetchHistoryAbsen(idUsers);
+  //blocHistory.fetchHistoryabsensi();
+  print("id history absen:"+idUsers);
+  getValue();
     super.initState();
   }
 
@@ -33,6 +44,9 @@ class _DataTablesState extends State<DataTables> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      ApiProvider().fetchHistoryAbsen(idUsers);
+    });
     return Scaffold(
         appBar: new AppBar(
           centerTitle: true,
@@ -45,7 +59,7 @@ class _DataTablesState extends State<DataTables> {
           elevation: 0.0,
         ),
       body:FutureBuilder(
-        future: ApiProvider().fetchHistoryAbsen(),
+        future: ApiProvider().fetchHistoryAbsen(idUsers),
         builder: (context, snapshot){
           if(!snapshot.hasData){
             return Center(child: CircularProgressIndicator(),);
@@ -139,68 +153,5 @@ dataBody(List<Modelhitoryabsensi> listSales) {
   );
 
 }
-
-// Widget buildList(AsyncSnapshot<List<Modeltables>> snapshot) {
-// return Container(
-//   child: ListView.separated(
-//       itemCount:  snapshot.data.length,
-//       separatorBuilder: (context, index) {
-//         return Divider(
-//           color: Color(0xFF6AB8C9),
-//         );
-//       },
-//
-//       itemBuilder: (context, index) {
-//         return ListView(
-//             children: <Widget>[
-//               SingleChildScrollView(
-//                 scrollDirection: Axis.horizontal,
-//                 child:  DataTable(
-//
-//                   columns: const <DataColumn>[
-//                     DataColumn(
-//                       numeric: true,
-//                       label: Text(
-//                         'Nama',
-//                         style: TextStyle(fontStyle: FontStyle.italic),
-//                       ),
-//                     ),
-//                     DataColumn(
-//                       label: Text(
-//                         'Email',
-//                         style: TextStyle(fontStyle: FontStyle.italic),
-//                       ),
-//                     ),
-//                     DataColumn(
-//                       label: Text(
-//                         'Nomor Handphone',
-//                         style: TextStyle(fontStyle: FontStyle.italic),
-//                       ),
-//                     ),
-//                     DataColumn(
-//                       label: Text(
-//                         'Website',
-//                         style: TextStyle(fontStyle: FontStyle.italic),
-//                       ),
-//                     ),
-//                     DataColumn(
-//                       label: Text(
-//                         'Username',
-//                         style: TextStyle(fontStyle: FontStyle.italic),
-//                       ),
-//                     ),
-//                   ],
-//                   rows: bloc.listSuratObject.map((snapshot) =>
-//                       DataRow(
-//
-//                       )
-//                   ).toList()
-//                 ),
-//               )
-//             ]
-//         );
-//     })
-// );
-// }
 
 

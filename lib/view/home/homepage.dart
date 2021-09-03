@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:bms_mobile/view/absensi/absensi.dart';
 import 'package:bms_mobile/view/dailyreport/dailyreport.dart';
+import 'package:bms_mobile/view/dailyreport/historydaily.dart';
 import 'package:bms_mobile/view/historyabsensi/datatabel.dart';
 import 'package:bms_mobile/view/menu/menufavorite.dart';
 import 'package:flutter/services.dart' as rootBundle;
@@ -25,6 +26,7 @@ import 'package:bms_mobile/provider/bookmarkbloc.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shape_of_view/shape_of_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,11 +74,27 @@ class _HomePageState extends State<HomePage> {
 
   List<menuData> _menuServiceList = [];
   final Set<menuData> _saved = new Set<menuData>();
+  String Idss;
+  String idUsers="";
+  void getValue() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      idUsers = pref.getString("idUsers");
+
+    });
+
+    // final SharedPreferences pref = await SharedPreferences.getInstance();
+    // var ids = pref.getString('idUsers');
+    // setState(() {
+    //   Idss=ids;
+    // });
+    // print("Id shared : "+Idss);
+  }
 
   @override
   void initState() {
 
-
+   getValue();
     super.initState();
   }
 
@@ -163,6 +181,11 @@ class _HomePageState extends State<HomePage> {
                     height: 5,
                   ),
                   Text(ApiProvider.namalengkap,
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Color(0xFFFFFFFF),
+                          fontWeight: FontWeight.w300)),
+                  Text(idUsers,
                       style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Color(0xFFFFFFFF),
@@ -314,7 +337,10 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  historydaily()));
+
+                                        },
                                         child: HeaderItem(
                                           id: 3,
                                           images: 'assets/icon/growth.png',

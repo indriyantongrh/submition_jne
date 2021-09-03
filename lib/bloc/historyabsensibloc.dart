@@ -8,10 +8,10 @@ class historyabsensibloc{
   final _DataObject = PublishSubject<List<Modelhitoryabsensi>>();
 
   Observable<List<Modelhitoryabsensi>> get dataObject => _DataObject.stream;
-  fetchHistoryabsensi() async {
-    List<Modelhitoryabsensi> dataTableses = await _repository.fetchHistoryabsensi();
-    _DataObject.sink.add(dataTableses);
-  }
+  // fetchHistoryabsensi() async {
+  //   // List<Modelhitoryabsensi> dataTableses = await _repository.fetchHistoryabsensi();
+  //   _DataObject.sink.add(dataTableses);
+  // }
   dispose(){
     _DataObject.close();
   }

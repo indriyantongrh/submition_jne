@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+
 import 'package:bms_mobile/model/model.dart';
 import 'package:bms_mobile/model/modelabsendetail.dart';
 import 'package:bms_mobile/model/modeldetail.dart';
+import 'package:bms_mobile/model/modeldetailreport.dart';
 import 'package:bms_mobile/model/modelhistoryabsensi.dart';
+import 'package:bms_mobile/model/modelhistoryreport.dart';
 import 'package:bms_mobile/model/modellogin.dart';
 import 'package:bms_mobile/model/modeltables.dart';
 import 'package:bms_mobile/model/modeluser.dart';
@@ -11,12 +14,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Client;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiProvider {
   Client client = Client();
   String jsonSample;
   static String name;
   static String id;
+  static String idReport;
   static String namalengkap;
   static String username;
   static String email;
@@ -39,6 +44,7 @@ class ApiProvider {
   static String keterangan;
   static String password;
   static String id_absen;
+  // static String idUsers="";
 
   static int success;
   static String message;
@@ -47,6 +53,7 @@ class ApiProvider {
   final _BaseUrl = "https://jsonplaceholder.typicode.com/users";
 
   static GlobalKey<ScaffoldState> scaffold_state = new GlobalKey<ScaffoldState>();
+
 
 
   // API for get datatable
@@ -139,16 +146,30 @@ class ApiProvider {
     }).then((response) async {
     print("Response Login body: ${response.body}");
     data = await json.decode(response.body);
+
         success = data["success"];
         message = data["message"];
         id = data["id"];
         namalengkap = data["namalengkap"];
         level = data["level"];
         email = data["email"];
+        nik = data["nik"];
+        nomortelepon = data["nomortelepon"];
         print(success);
-    });
+
+        // if (success == 1) {
+        //   final SharedPreferences pref = await SharedPreferences.getInstance();
+        //   await pref.setString( 'idUsers' , data["id"]);
+        // }
+
+    }
+
+    );
 
   }
+
+
+
 
   static fetchregister() async{
     http.post(BASEURL+"registeruser.php", body:{
@@ -167,9 +188,9 @@ class ApiProvider {
     });
   }
 
-  static fetchUpdateUser() async{
+  static fetchUpdateUser(String idUsers) async{
     http.post(BASEURL+"updateuser.php", body:{
-      "id" : id,
+      "id" : idUsers,
       "namalengkap" : namalengkap,
       "email" : email,
       "nomortelepon" : nomortelepon,
@@ -193,9 +214,11 @@ class ApiProvider {
     });
   }
 
-  static fetchAbsensi() async{
+  static fetchAbsensi(String idUsers) async{
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idUsers = preff.getString("idUsers");
     http.post(BASEURL+"insertabsen.php", body:{
-      "id" : id,
+      "id" : idUsers,
       "datetime" : datetime,
       "hari" : hari,
       "checkin" : checkin,
@@ -207,17 +230,9 @@ class ApiProvider {
       success = data["success"];
       message = data["message"];
       print(success);
-      print("Id anda: "+id);
-      //
-      //  scaffold_state.currentState.showSnackBar(SnackBar(
-      //     content: Text(
-      //       message,
-      //       textAlign: TextAlign.center,
-      //       style: TextStyle(fontFamily: 'AirBnB'),
-      //     ),
-      //     duration: Duration(seconds: 2),
-      //
-      // ));
+
+
+
     });
   }
 
@@ -247,9 +262,11 @@ class ApiProvider {
     }
   }
 
-  static fetchUpdateAbsen() async{
+  static fetchUpdateAbsen(String idUsers) async{
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idUsers = preff.getString("idUsers");
     http.post(BASEURL+"updateabsensi.php", body:{
-      "id" : id,
+      "id" : idUsers,
       "datetime" : datetime,
       "checkout" : checkout,
       "status" : "2",
@@ -273,9 +290,11 @@ class ApiProvider {
     });
   }
 
-  static fetchDailyReport() async{
+  static fetchDailyReport(String idUsers) async{
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idUsers = preff.getString("idUsers");
     http.post(BASEURL+"insertdailyreport.php", body:{
-      "id" : id,
+      "id" : idUsers,
       "projectName" : projectName,
       "activity" : activity,
       "progress" : progress,
@@ -296,12 +315,15 @@ class ApiProvider {
 
 
   // API for get datatable
-  Future<List<Modelhitoryabsensi>> fetchHistoryAbsen() async {
+  Future<List<Modelhitoryabsensi>> fetchHistoryAbsen(String idUsers) async {
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idUsers = preff.getString("idUsers");
     print("masuk hisrtoy");
-    print(BASEURL+"gethistoryabsensi.php?id="+id);
-    final response = await client.get(BASEURL+"gethistoryabsensi.php?id="+id);
+    print(BASEURL+"gethistoryabsensi.php?id="+idUsers);
+    final response = await http.post(BASEURL+"gethistoryabsensi.php?id="+idUsers);
     if (response.statusCode == 200) {
       print(response.body);
+      print("id history absen Apiprovider:"+idUsers);
       jsonSample = (response.body);
 
       return compute(modelhitoryabsensiFromJson, response.body);
@@ -310,4 +332,57 @@ class ApiProvider {
       //print(BASEURL+"gethistoryabsensi.php?id="+id);
     }
   }
+
+
+  // API for get datatable
+  Future<List<Modelhitoryreport>> fetchHistoryReport(String idUsers) async {
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idUsers = preff.getString("idUsers");
+
+
+    print("masuk hisrtoy");
+    print(BASEURL+"gethistorydaily.php?id="+idUsers);
+    final response = await client.get(BASEURL+"gethistorydaily.php?id="+idUsers);
+    if (response.statusCode == 200) {
+      print(response.body);
+      jsonSample = (response.body);
+
+      return compute(modelhitoryreportFromJson, response.body);
+    } else {
+      print("Load gagal");
+      //print(BASEURL+"gethistoryabsensi.php?id="+id);
+    }
+  }
+
+  // api get user
+  Future<List<Modeldetailreport>> fetchDetailReport() async {
+
+    print("masuk");
+    final responseUser =
+    await client.get(BASEURL+"getdetailreport.php?idReport="+idReport);
+    if (responseUser.statusCode == 200) {
+      print(responseUser.body);
+      final data = json.decode(responseUser.body);
+      print("Print string : ${data}");
+
+      id = data[0]["id"];
+      idReport = data[0]["idReport"];
+      projectName = data[0]["projectName"];
+      activity = data[0]["activity"];
+      datetime = data[0]["datetime"];
+      progress = data[0]["progress"];
+      urgent = data[0]["urgent"];
+      // password = data[0]["password"];
+
+      print(id);
+
+
+      return compute(modeldetailreportFromJson, responseUser.body);
+    } else {
+      print("Load gagal");
+    }
+  }
+
 }
+
+

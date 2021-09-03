@@ -1,29 +1,21 @@
-
+import 'package:bms_mobile/bloc/detailreportbloc.dart';
 import 'package:bms_mobile/palettescolor/palettescolor.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
-import 'package:shape_of_view/shape_of_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class dailyreport extends StatefulWidget {
+class detailreport extends StatefulWidget {
   @override
-  _dailyreportState createState() => _dailyreportState();
+  _detailreportState createState() => _detailreportState();
 }
 
-class _dailyreportState extends State<dailyreport> {
+class _detailreportState extends State<detailreport> {
   //untuk memunculkan text input klarasi
   TextEditingController etActivity = new TextEditingController();
-  TextEditingController etDatebirth = new TextEditingController();
-  TextEditingController etNohp = new TextEditingController();
   TextEditingController etName = new TextEditingController();
-  TextEditingController etNik = new TextEditingController();
-  TextEditingController etDateTime = new TextEditingController();
-  TextEditingController etLevel = new TextEditingController();
+
   static GlobalKey<ScaffoldState> scaffold_state = new GlobalKey<
       ScaffoldState>();
 
@@ -33,19 +25,12 @@ class _dailyreportState extends State<dailyreport> {
   String hariSekarang;
   bool _validate;
   static int valueLevel;
-  String idUsers="";
-  void getValue() async{
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      idUsers = pref.getString("idUsers");
 
-    });
-
-  }
   void initState() {
-    getValue();
+    blocDetailReport.fetchdetailReportn();
     _validate = false;
-
+    etName.text = ApiProvider.projectName;
+    etActivity.text = ApiProvider.activity;
     super.initState();
   }
 
@@ -128,7 +113,7 @@ class _dailyreportState extends State<dailyreport> {
       hariSekarang = "Rabu";
     } else if (hari == "Thursday") {
       hariSekarang = "Kamis";
-    }else if (hari == "Friday"){
+    } else if (hari == "Tuesday") {
       hariSekarang = "Jumat";
     } else if (hari == "Saturday") {
       hariSekarang = "Sabtu";
@@ -137,7 +122,11 @@ class _dailyreportState extends State<dailyreport> {
     }
 
     setState(() {
-      ApiProvider.hari= hariSekarang;
+      //blocDetailReport.fetchdetailReportn();
+     // selectedProgress = ApiProvider.progress;
+      ///Tanggall = ApiProvider.datetime;
+     etName.text = ApiProvider.projectName;
+     etActivity.text = ApiProvider.activity;
     });
 
 
@@ -176,10 +165,10 @@ class _dailyreportState extends State<dailyreport> {
                           //controller: alamat.controller,
                           format: format,
                           onChanged: (dt) {
-                         setState(() => Tanggall = dt);
-                         ApiProvider.datetime = '$Tanggall';
-                          print('Selected date: $Tanggall');
-                            },
+                            setState(() => Tanggall = dt);
+                            ApiProvider.datetime = '$Tanggall';
+                            print('Selected date: $Tanggall');
+                          },
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "Masukan Tanggal",
@@ -205,39 +194,6 @@ class _dailyreportState extends State<dailyreport> {
                           },
                         ),
 
-                        // DateTimeField(
-                        //  /// enabled: _isEnable,
-                        //   onShowPicker: ,
-                        //    readOnly: true,
-                        //   controller: etDateTime,
-                        //   keyboardType: TextInputType.emailAddress,
-                        //   // onChanged: (String datetime) {
-                        //   //   ApiProvider.datetime = datetime;
-                        //   // },
-                        //   decoration: InputDecoration(
-                        //     // errorText: _validate
-                        //     //     ? "Masukan email anda"
-                        //     //     : null,
-                        //
-                        //
-                        //       labelText: "Masukan tanggal ",
-                        //       border: InputBorder.none,
-                        //       hintText: (_date.toString()),
-                        //
-                        //       hintStyle: GoogleFonts.poppins(color: Colors.black87),
-                        //       icon:
-                        //       const Padding(
-                        //           padding:
-                        //           const EdgeInsets.only(
-                        //               top: 3.0),
-                        //           child: const Icon(
-                        //             Icons.date_range_outlined,
-                        //             color: PalettesColor.redtelkomsel,))
-                        //   ),
-                        //   // onTap: () {
-                        //   //   _selectedDate(context);
-                        //   // },
-                        // ),
                       ),
                       //input name
                       Container(
@@ -386,7 +342,7 @@ class _dailyreportState extends State<dailyreport> {
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  ShowDialogInsert();
+                                 // ShowDialogInsert();
                                   //ShowDialogupdate();
                                   ///ShowDialogLogin();
                                   // Navigator.of(context).pushReplacement(new MaterialPageRoute(
@@ -411,63 +367,8 @@ class _dailyreportState extends State<dailyreport> {
         )
 
     );
-
-
-  }
-
-  /*Untuk show dialog login*/
-  void ShowDialogInsert() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        child: new Dialog(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: 60),
-            child: new Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: new CircularProgressIndicator(),
-                ),
-                new Text("     Loading..."),
-              ],
-            ),
-          ),
-        ));
-
-    print(ApiProvider.datetime);
-    print(ApiProvider.projectName);
-    print(ApiProvider.activity);
-    print(ApiProvider.progress);
-    print(ApiProvider.urgent);
-    print(ApiProvider.hari);
-    print(idUsers);
-    // print(ApiProvider.password);
-    // print(ApiProvider.level);
-
-    await ApiProvider.fetchDailyReport(idUsers);
-
-
-    new Future.delayed(new Duration(seconds: 1), () async {
-      Navigator.of(context, rootNavigator: true).pop();
-      await scaffold_state.currentState.showSnackBar(SnackBar(
-        content: Text(
-          ApiProvider.message,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: 'AirBnB'),
-        ),
-        duration: Duration(seconds: 3),
-      ));
-
-      print("massage : "+ApiProvider.message);
-
-
-
-    });
   }
 }
-
 
 class Progress {
   String progress;

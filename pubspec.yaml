@@ -50,6 +50,7 @@ dependencies:
   analog_clock: ^0.0.1
   intl: ^0.15.8
   datetime_picker_formfield: any
+  shared_preferences: any
 
 
 dev_dependencies:

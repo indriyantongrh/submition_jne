@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:shape_of_view/shape_of_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../menuutama.dart';
 
@@ -33,13 +34,21 @@ class _profileState extends State<profile> {
   bool _validate;
   static int valueLevel;
 
+  String idUsers="";
+  void getValue() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      idUsers = pref.getString("idUsers");
 
+    });
+
+  }
 
 
   void initState() {
     blocDetail.fetchdataDetail();
     _validate = false;
-
+    getValue();
     blocDetail.fetchdataDetail();
     print(blocDetail.fetchdataDetail());
     ///bloc.fetchdataLogins();
@@ -49,12 +58,12 @@ class _profileState extends State<profile> {
 
   @override
   void dispose() {
-    etName.dispose();
-    etNik.dispose();
-    etEmail.dispose();
-    etNohp.dispose();
-    etPassword.dispose();
-    etLevel.dispose();
+    // etName.dispose();
+    // etNik.dispose();
+    // etEmail.dispose();
+    // etNohp.dispose();
+    // etPassword.dispose();
+    // etLevel.dispose();
     super.dispose();
   }
 
@@ -405,10 +414,11 @@ class _profileState extends State<profile> {
     print(ApiProvider.namalengkap);
     print(ApiProvider.nik);
     print(ApiProvider.nomortelepon);
+    print(ApiProvider.id);
     // print(ApiProvider.password);
     // print(ApiProvider.level);
 
-    await ApiProvider.fetchUpdateUser();
+    await ApiProvider.fetchUpdateUser(idUsers);
 
 
     new Future.delayed(new Duration(seconds: 3), () async {

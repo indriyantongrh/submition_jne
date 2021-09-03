@@ -5,6 +5,7 @@ import 'package:bms_mobile/bloc/detailabsenbloc.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:circle_button/circle_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_countdown_clock/slide_countdown_clock.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:intl/intl.dart';
@@ -24,9 +25,19 @@ class _absensiState extends State<absensi> {
   static GlobalKey<ScaffoldState> scaffold_state =  new GlobalKey<ScaffoldState>();
 
   String _timeString;
+  String idUsers="";
+  void getValue() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      idUsers = pref.getString("idUsers");
+
+    });
+
+  }
 
   @override
   void initState() {
+    getValue();
     _timeString = _formatDateTime(DateTime.now());
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
     blocAbsen.fetchdetailAbsen();
@@ -69,7 +80,7 @@ class _absensiState extends State<absensi> {
       hariSekarang = "Rabu";
     }else if (hari == "Thursday"){
       hariSekarang = "Kamis";
-    }else if (hari == "Tuesday"){
+    }else if (hari == "Friday"){
       hariSekarang = "Jumat";
     }else if (hari == "Saturday"){
       hariSekarang = "Sabtu";
@@ -266,10 +277,13 @@ class _absensiState extends State<absensi> {
     print(ApiProvider.checkin);
     print(ApiProvider.keterangan);
     print(ApiProvider.hari);
+
     // print(ApiProvider.password);
     // print(ApiProvider.level);
 
-    await ApiProvider.fetchAbsensi();
+   //// await ApiProvider.fetchAbsensi(idUsers);
+    await ApiProvider.fetchAbsensi(idUsers);
+
 
     new Future.delayed(new Duration(seconds: 1), () async {
       Navigator.of(context, rootNavigator: true).pop();
@@ -320,10 +334,11 @@ class _absensiState extends State<absensi> {
     print(ApiProvider.checkout);
     print(ApiProvider.keterangan);
     print(ApiProvider.hari);
+    print(idUsers);
     // print(ApiProvider.password);
     // print(ApiProvider.level);
 
-    await ApiProvider.fetchUpdateAbsen();
+     await ApiProvider.fetchUpdateAbsen(idUsers);
 
     new Future.delayed(new Duration(seconds: 1), () async {
       Navigator.of(context, rootNavigator: true).pop();

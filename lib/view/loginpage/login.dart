@@ -5,6 +5,7 @@ import 'package:bms_mobile/view/loginpage/register.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -29,6 +30,11 @@ class _LoginState extends State<Login> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void saveLogin() async{
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString( 'idUsers' , ApiProvider.id);
   }
 
   @override
@@ -280,6 +286,7 @@ class _LoginState extends State<Login> {
         ));
 
     await ApiProvider.fetchLogin();
+    saveLogin();
     new Future.delayed(new Duration(seconds: 3), () async {
       Navigator.of(context, rootNavigator: true).pop();
       await scaffold_state.currentState.showSnackBar(SnackBar(
@@ -291,6 +298,9 @@ class _LoginState extends State<Login> {
         duration: Duration(seconds: 2),
       ));
       if (ApiProvider.success == 1) {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.setString("idUsers", ApiProvider.id);
+
         /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => SelectedRole()));*/
         Navigator.of(context).pushReplacement(new MaterialPageRoute(
@@ -299,7 +309,6 @@ class _LoginState extends State<Login> {
         print(ApiProvider.message);
       }
 
-      /// _LoginProcess();
     });
   }
 
