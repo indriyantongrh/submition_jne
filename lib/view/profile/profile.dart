@@ -437,53 +437,7 @@ class _profileState extends State<profile> {
               builder: (BuildContext context) => MenuUtama()));
         });
       }
-      // if(ApiProvider.success == 1){
-      //   await AlertDialog(
-      //     title: const Text('Sukses'),
-      //     content: new Column(
-      //       mainAxisSize: MainAxisSize.min,
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: <Widget>[
-      //         Text("Hello"),
-      //         Container(
-      //             height: 50,
-      //             margin:
-      //             EdgeInsets.symmetric(horizontal: 30),
-      //             decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(10),
-      //                 color: Colors.redtelkomsel),
-      //             child: Center(
-      //               child: GestureDetector(
-      //                 onTap: () {
-      //                   setState(() {
-      //
-      //                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
-      //                         builder: (BuildContext context) => Setting()));
-      //                     ///ShowDialogLogin();
-      //                     // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-      //                     //     builder: (BuildContext context) => RoleSelected()));
-      //                   });
-      //                 },
-      //                 child: Text(
-      //                     "Kembali",
-      //                     style: GoogleFonts.poppins(fontSize: 20 ,color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600)
-      //                 ),
-      //               ),
-      //             )),
-      //       ],
-      //     ),
-      //     actions: <Widget>[
-      //       new FlatButton(
-      //         onPressed: () {
-      //           Navigator.of(context).pop();
-      //         },
-      //         textColor: Theme.of(context).primaryColor,
-      //         child: const Text('Close'),
-      //       ),
-      //     ],
-      //   );
-      // }
-      print("massage : "+ApiProvider.message);
+
 
 
 

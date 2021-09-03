@@ -1,10 +1,12 @@
 import 'package:bms_mobile/bloc/detailreportbloc.dart';
 import 'package:bms_mobile/palettescolor/palettescolor.dart';
 import 'package:bms_mobile/resource/apiprovider.dart';
+import 'package:bms_mobile/view/dailyreport/historydaily.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class detailreport extends StatefulWidget {
   @override
@@ -15,6 +17,9 @@ class _detailreportState extends State<detailreport> {
   //untuk memunculkan text input klarasi
   TextEditingController etActivity = new TextEditingController();
   TextEditingController etName = new TextEditingController();
+  TextEditingController _textEditingController = TextEditingController();
+  TextEditingController etDate = TextEditingController();
+
 
   static GlobalKey<ScaffoldState> scaffold_state = new GlobalKey<
       ScaffoldState>();
@@ -26,9 +31,20 @@ class _detailreportState extends State<detailreport> {
   bool _validate;
   static int valueLevel;
 
+  String idReports="";
+  void getValue() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      idReports = pref.getString("idReports");
+
+    });
+
+  }
+
   void initState() {
     blocDetailReport.fetchdetailReportn();
     _validate = false;
+    getValue();
     etName.text = ApiProvider.projectName;
     etActivity.text = ApiProvider.activity;
     super.initState();
@@ -92,6 +108,28 @@ class _detailreportState extends State<detailreport> {
     return items;
   }
 
+  DateTime date;
+  String strDate;
+  Future<void> _selectDate(BuildContext context) async {
+    final now = DateTime.now();
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: date ?? now,
+        firstDate: now,
+        lastDate: DateTime(2101));
+    if (picked != null && picked != date) {
+      print('hello $picked');
+      setState(() {
+        date = picked;
+        String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
+        print(formattedDate);
+        setState(() {
+          _textEditingController.text = formattedDate;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime Tanggall;
@@ -113,7 +151,7 @@ class _detailreportState extends State<detailreport> {
       hariSekarang = "Rabu";
     } else if (hari == "Thursday") {
       hariSekarang = "Kamis";
-    } else if (hari == "Tuesday") {
+    }else if (hari == "Friday"){
       hariSekarang = "Jumat";
     } else if (hari == "Saturday") {
       hariSekarang = "Sabtu";
@@ -122,13 +160,12 @@ class _detailreportState extends State<detailreport> {
     }
 
     setState(() {
-      //blocDetailReport.fetchdetailReportn();
-     // selectedProgress = ApiProvider.progress;
-      ///Tanggall = ApiProvider.datetime;
+
+      ApiProvider.hari = hariSekarang;
      etName.text = ApiProvider.projectName;
+
      etActivity.text = ApiProvider.activity;
     });
-
 
     final format = DateFormat("dd/MM/yyyy");
     return Scaffold(
@@ -151,8 +188,9 @@ class _detailreportState extends State<detailreport> {
                   Column(
                     children: [
                       SizedBox(height: 30,),
-                      Text("Input Daily Activity" ,style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30, fontFamily: 'AirBnB') ,),
+                      Text("Detai Daily Activity" ,style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30, fontFamily: 'AirBnB') ,),
                       SizedBox(height: 20,),
+
                       //input datetime
                       Container(
                         padding: EdgeInsets.all(8.0),
@@ -171,9 +209,8 @@ class _detailreportState extends State<detailreport> {
                           },
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Masukan Tanggal",
-                              hintStyle: GoogleFonts.poppins(color: Color(
-                                  0xFFBDBDBD)),
+                              hintText: ApiProvider.datetime,
+                              hintStyle: GoogleFonts.poppins(color: Colors.black),
                               icon: const Padding(
                                   padding:
                                   const EdgeInsets.only(
@@ -280,10 +317,9 @@ class _detailreportState extends State<detailreport> {
                             //     ? "Masukan NIK anda"
                             //     : null,
 
-                              hintText: "Pilih Progress",
+                              hintText: ApiProvider.progress,
                               border: InputBorder.none,
-                              hintStyle: GoogleFonts.poppins(color: Color(
-                                  0xFFBDBDBD)),
+                              hintStyle: GoogleFonts.poppins(color: Colors.black),
                               icon: const Padding(
                                   padding:
                                   const EdgeInsets.only(
@@ -314,10 +350,9 @@ class _detailreportState extends State<detailreport> {
                             // errorText: _validate
                             //     ? "Masukan NIK anda"
                             //     : null,
-                              hintText: "Pilih Prioritas",
+                              hintText: ApiProvider.urgent,
                               border: InputBorder.none,
-                              hintStyle: GoogleFonts.poppins(color: Color(
-                                  0xFFBDBDBD)),
+                              hintStyle: GoogleFonts.poppins(color: Colors.black),
                               icon: const Padding(
                                   padding:
                                   const EdgeInsets.only(
@@ -331,32 +366,57 @@ class _detailreportState extends State<detailreport> {
 
                       SizedBox(height: 30,),
                       //button registrer
-                      Container(
-                          height: 50,
-                          margin:
-                          EdgeInsets.symmetric(horizontal: 30),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.redtelkomsel),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
+                      Row(
+
+                        children: [
+                         SizedBox(
+                           width: 280,
+                           child:  Container(
+                               height: 50,
+                               margin:
+                               EdgeInsets.symmetric(horizontal: 30),
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(10),
+                                   color: Colors.lightBlueAccent),
+                               child:
+                               Center(
+                                 child:
+                                 GestureDetector(
+                                   onTap: () {
+                                     setState(() {
+                                       ShowDialogupdate();
+
+                                     });
+                                   },
+                                   child: Text(
+                                       "Update",
+                                       style: GoogleFonts.poppins(fontSize: 20,
+                                           color: Color(0xFFFFFFFF),
+                                           fontWeight: FontWeight.w600)
+                                   ),
+                                 ),
+                               )),
+                         ),
+                          FlatButton(
+
+                              onPressed: (){
                                 setState(() {
-                                 // ShowDialogInsert();
-                                  //ShowDialogupdate();
-                                  ///ShowDialogLogin();
-                                  // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                                  //     builder: (BuildContext context) => RoleSelected()));
+                                  ShowDialogdelete();
                                 });
                               },
-                              child: Text(
-                                  "Simpan",
-                                  style: GoogleFonts.poppins(fontSize: 20,
-                                      color: Color(0xFFFFFFFF),
-                                      fontWeight: FontWeight.w600)
-                              ),
+                              child:  const Padding(
+                                  padding:
+                                  const EdgeInsets.only(
+                                      ),
+                                  child: const Icon(
+                                    Icons.restore_from_trash,
+                                    color: PalettesColor.redtelkomsel,
+                                  size: 50,)),
                             ),
-                          )),
+
+                        ],
+                      ),
+
                     ],
                   )
 
@@ -368,7 +428,107 @@ class _detailreportState extends State<detailreport> {
 
     );
   }
+
+  /*Untuk show dialog Update*/
+  void ShowDialogupdate() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: new Dialog(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 60),
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: new CircularProgressIndicator(),
+                ),
+                new Text("     Loading..."),
+              ],
+            ),
+          ),
+        ));
+
+    print("id : "+idReports);
+    print("name : "+ApiProvider.projectName);
+    print("date : "+ApiProvider.datetime);
+    print("hari : "+ApiProvider.hari);
+    print("activity : "+ApiProvider.activity);
+    print("progress : "+ApiProvider.progress);
+    print("urgent : "+ApiProvider.urgent);
+
+    await ApiProvider.fetchUpdateReport(idReports);
+
+
+    new Future.delayed(new Duration(seconds: 3), () async {
+      Navigator.of(context, rootNavigator: true).pop();
+      await scaffold_state.currentState.showSnackBar(SnackBar(
+        content: Text(
+          ApiProvider.message,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: 'AirBnB'),
+        ),
+        // duration: Duration(seconds: 2),
+      ));
+      if(ApiProvider.success == 1){
+        Future.delayed(Duration(seconds: 1), (){
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) => historydaily()));
+        });
+      }
+    });
+  }
+
+  /*Untuk show dialog delete*/
+  void ShowDialogdelete() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: new Dialog(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 60),
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: new CircularProgressIndicator(),
+                ),
+                new Text("     Loading..."),
+              ],
+            ),
+          ),
+        ));
+
+
+
+
+    await ApiProvider.fetchdeleteReport(idReports);
+
+
+    new Future.delayed(new Duration(seconds: 3), () async {
+      Navigator.of(context, rootNavigator: true).pop();
+      await scaffold_state.currentState.showSnackBar(SnackBar(
+        content: Text(
+          ApiProvider.message,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: 'AirBnB'),
+        ),
+        // duration: Duration(seconds: 2),
+      ));
+      if(ApiProvider.success == 1){
+        Future.delayed(Duration(seconds: 1), (){
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) => historydaily()));
+        });
+      }
+    });
+  }
 }
+
+
+
 
 class Progress {
   String progress;

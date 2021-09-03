@@ -185,11 +185,6 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 16,
                           color: Color(0xFFFFFFFF),
                           fontWeight: FontWeight.w300)),
-                  Text(idUsers,
-                      style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          color: Color(0xFFFFFFFF),
-                          fontWeight: FontWeight.w300))
                 ],
               ),
             ),
@@ -252,12 +247,29 @@ class _HomePageState extends State<HomePage> {
                                                         FontWeight.w600)),
                                           ),
 
-                                          Text(dataLevel,
+                                          Text(ApiProvider.email,
                                               style: GoogleFonts.poppins(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300)),
+
+                                          Container(
+                                            height: 40,
+                                            width: 130,
+                                            child:    Card(
+                                              color: Colors.amberAccent,
+                                              child: Center(
+                                                child:  Text(dataLevel,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w700)),
+                                              )
+
+                                            ),
+                                          )
+
                                         ]),
-                                  )
+                                  ),
+
                                 ],
                               ),
                             ),

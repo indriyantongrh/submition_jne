@@ -383,6 +383,63 @@ class ApiProvider {
     }
   }
 
+
+  static fetchUpdateReport(String idReports) async{
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idReports = preff.getString("idReports");
+    http.post(BASEURL+"updatereport.php", body:{
+      "idReport" : idReports,
+      "projectName" : projectName,
+      "activity" : activity,
+      "progress" : progress,
+      "urgent" : urgent,
+      "datetime" : datetime,
+      "hari" : hari,
+
+    }).then((response) async {
+      print("Response update body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+
+      // await scaffold_state.currentState.showSnackBar(SnackBar(
+      //     content: Text(
+      //       ApiProvider.message,
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontFamily: 'AirBnB'),
+      //     ),
+      //     duration: Duration(seconds: 2),
+      //
+      // ));
+    });
+  }
+
+  static fetchdeleteReport(String idReports) async{
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idReports = preff.getString("idReports");
+    http.post(BASEURL+"deletereport.php", body:{
+      "idReport" : idReports,
+
+    }).then((response) async {
+      print("Response update body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+
+      // await scaffold_state.currentState.showSnackBar(SnackBar(
+      //     content: Text(
+      //       ApiProvider.message,
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontFamily: 'AirBnB'),
+      //     ),
+      //     duration: Duration(seconds: 2),
+      //
+      // ));
+    });
+  }
+
 }
 
 
