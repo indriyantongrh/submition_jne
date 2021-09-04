@@ -4,6 +4,6 @@
 
  # Silahkan bisa clone dengan menggunakan Android Studio atau VS Code
 
- <a href="www.nama-domain.com/dokumen.pdf">Download file dokumen</a>
+ <a href="https://github.com/indriyantongrh/submition_jne/tree/Development/apkDownload">Download Aplikasi disini</a>
 
 
