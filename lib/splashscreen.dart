@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:bms_mobile/menuutama.dart';
 import 'package:bms_mobile/view/loginpage/login.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,8 +12,22 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  bool login;
+  String idUsers;
+  String idReports;
+
+  Future getValue() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      login = pref.getBool("login");
+
+    });
+
+  }
+
   @override
   void initState() {
+    getValue();
     super.initState();
     startSplashScreen();
 
@@ -20,12 +36,33 @@ class _SplashScreenState extends State<SplashScreen> {
   startSplashScreen() async {
 
     var duration = const Duration(seconds: 5);
-    return Timer(duration, () {
+    return Timer(duration, () async{
+      // if(login == true) {
+      //   SharedPreferences pref = await SharedPreferences.getInstance();
+      //   setState(() {
+      //     idUsers = pref.getString("idUsers");
+      //     idReports = pref.getString("idReports");
+      //
+      //   });
+      //   Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(builder: (_) {
+      //       return MenuUtama();
+      //     }),
+      //   );
+      // }else{
+      //   Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(builder: (_) {
+      //       return Login();
+      //     }),
+      //   );
+      // }
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) {
           return Login();
         }),
       );
+
     });
   }
 

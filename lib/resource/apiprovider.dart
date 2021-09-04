@@ -44,6 +44,7 @@ class ApiProvider {
   static String checkout_2;
   static String keterangan;
   static String password;
+  static String passwordbaru;
   static String id_absen;
   // static String idUsers="";
 
@@ -496,6 +497,33 @@ class ApiProvider {
     }
   }
 
+
+  static fetchUpdatepassword(String idUsers) async{
+    SharedPreferences preff = await SharedPreferences.getInstance();
+    idUsers = preff.getString("idUsers");
+    http.post(BASEURL+"updatepassword.php", body:{
+      "id" : idUsers,
+      "password" : password,
+      "passwordbaru" : passwordbaru,
+
+    }).then((response) async {
+      print("Response update body: ${response.body}");
+      data = await json.decode(response.body);
+      success = data["success"];
+      message = data["message"];
+      print(success);
+
+      // await scaffold_state.currentState.showSnackBar(SnackBar(
+      //     content: Text(
+      //       ApiProvider.message,
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontFamily: 'AirBnB'),
+      //     ),
+      //     duration: Duration(seconds: 2),
+      //
+      // ));
+    });
+  }
 }
 
 

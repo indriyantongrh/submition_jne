@@ -300,6 +300,7 @@ class _LoginState extends State<Login> {
       if (ApiProvider.success == 1) {
         SharedPreferences pref = await SharedPreferences.getInstance();
         await pref.setString("idUsers", ApiProvider.id);
+        await pref.setBool("login", true);
 
         /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => SelectedRole()));*/

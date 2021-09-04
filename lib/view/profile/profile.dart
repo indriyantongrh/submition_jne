@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bms_mobile/bloc/dataUserBloc.dart';
 import 'package:bms_mobile/bloc/detailUserbloc.dart';
 import 'package:bms_mobile/palettescolor/palettescolor.dart';
@@ -5,9 +7,11 @@ import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/home/homepage.dart';
 import 'package:bms_mobile/view/loginpage/login.dart';
 import 'package:bms_mobile/view/menu/akun.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shape_of_view/shape_of_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,6 +31,13 @@ class _profileState extends State<profile> {
   TextEditingController etNik = new TextEditingController();
   TextEditingController etEmail = new TextEditingController();
   TextEditingController etLevel = new TextEditingController();
+
+
+  File file;
+  String status = '';
+  String base64Image;
+  File tmpFile;
+  String errMessage = 'Error Uploading Image';
 
   // Initially password is obscure
   bool _obscureText = true;
@@ -67,7 +78,11 @@ class _profileState extends State<profile> {
     super.dispose();
   }
 
-
+  // chooseImage() {
+  //   setState(() {
+  //     file = ImagePicker.pickImage(source: ImageSource.gallery);
+  //   });
+  // }
 
 
   static GlobalKey<ScaffoldState> scaffold_state =  new GlobalKey<ScaffoldState>();
@@ -143,6 +158,7 @@ class _profileState extends State<profile> {
                     ),
                   ),
 
+
                   //untuk mengganti avatar dan nama user
                   Positioned(
                     top: 120,
@@ -156,11 +172,13 @@ class _profileState extends State<profile> {
                           radius: 65,
                           backgroundColor: Colors.white,
                           child: (
-                              CircleAvatar(
-                                radius: 53,
-                                backgroundColor: Colors.orange,
-                                backgroundImage: AssetImage("assets/peson.png"),
-                              )
+                               CircleAvatar(
+                                  radius: 53,
+                                  backgroundColor: Colors.orange,
+                                  backgroundImage: AssetImage("assets/peson.png"),
+                                )
+
+
                           ),
                         ),
                       ),
@@ -378,6 +396,8 @@ class _profileState extends State<profile> {
                               ),
                             ),
                           )),
+
+
                     ],
                   )
 
@@ -388,6 +408,8 @@ class _profileState extends State<profile> {
         )
     );
   }
+
+
 
   /*Untuk show dialog login*/
   void ShowDialogupdate() async {
@@ -443,4 +465,8 @@ class _profileState extends State<profile> {
 
     });
   }
+
+
+
 }
+

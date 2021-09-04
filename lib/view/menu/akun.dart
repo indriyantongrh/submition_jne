@@ -1,10 +1,12 @@
 import 'package:bms_mobile/resource/apiprovider.dart';
 import 'package:bms_mobile/view/loginpage/login.dart';
+import 'package:bms_mobile/view/password/gantipassword.dart';
 import 'package:bms_mobile/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shape_of_view/shape_of_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -144,11 +146,11 @@ class _SettingState extends State<Setting> {
                         padding: EdgeInsets.only(left: 20),
                         child: GestureDetector(
                           onTap: (){
-                            ClickMenu();
-
+                            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                                builder: (BuildContext context) => gantipassword()));
                           },
                           child: Text(
-                              "Update Password",
+                              "Ganti Password",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(fontSize:16 ,fontWeight: FontWeight.w500)
                           ),
@@ -170,10 +172,12 @@ class _SettingState extends State<Setting> {
                   Center(
                       child: GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  profile()));
+                          setState(() async {
+                            SharedPreferences preferences = await SharedPreferences.getInstance();
+                            await preferences.clear();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  Login()));
+                          });
 
-                          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                          //     builder: (BuildContext context) => Login()));
                         },
                         child: Text(
                           "Logout",
