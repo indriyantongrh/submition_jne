@@ -253,13 +253,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.1"
-  file_picker:
-    dependency: "direct main"
-    description:
-      name: file_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.7"
   fixnum:
     dependency: transitive
     description:
@@ -300,13 +293,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.2"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.11"
   flutter_spinkit:
     dependency: transitive
     description:
@@ -380,13 +366,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
-  image_picker:
-    dependency: "direct main"
-    description:
-      name: image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.12+1"
   intl:
     dependency: "direct main"
     description:

@@ -48,8 +48,7 @@ dependencies:
   slide_countdown_clock: ^1.0.3
   slide_digital_clock: any
   analog_clock: ^0.0.1
-  image_picker: ^0.4.10
-  file_picker: any
+
     # format date time
   intl: ^0.16.1
   datetime_picker_formfield: any
