@@ -13,8 +13,10 @@ import 'package:bms_mobile/model/modeluser.dart';
 import 'package:bms_mobile/model/modelusers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' show Client;
 import 'package:http/http.dart' as http;
+import 'package:loading_dialog/loading_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiProvider {
@@ -342,8 +344,6 @@ class ApiProvider {
     idUsers = preff.getString("idUsers");
 
 
-    print("masuk hisrtoy");
-    print(BASEURL+"gethistorydaily.php?id="+idUsers);
     final response = await client.get(BASEURL+"gethistorydaily.php?id="+idUsers);
     if (response.statusCode == 200) {
       print(response.body);

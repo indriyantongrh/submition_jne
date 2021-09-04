@@ -55,6 +55,8 @@ dependencies:
   datetime_picker_formfield: any
   shared_preferences: any
   f_datetimerangepicker: ^0.1.4
+  flutter_easyloading: any
+  loading_dialog: ^0.0.1 #latest versi
 
 dev_dependencies:
   flutter_test:

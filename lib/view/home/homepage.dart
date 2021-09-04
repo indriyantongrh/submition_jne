@@ -596,22 +596,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ],
                                               ),
-                                              // //Icon Binatng Favorite
-                                              // Row(
-                                              //   mainAxisAlignment:
-                                              //       MainAxisAlignment.end,
-                                              //   children: [
-                                              //     Stack(
-                                              //       children: [
-                                              //         IconButton(icon: Icon(Icons.star_border),
-                                              //             onPressed: (){
-                                              //
-                                              //             })
-                                              //
-                                              //       ],
-                                              //     ),
-                                              //   ],
-                                              // )
+
                                             ],
                                           ));
                                     });
@@ -626,36 +611,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  Widget _rowMenuServices(Modelmenu modelMenu) {
-    return new Container(
-      height: double.infinity,
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                showModalBottomSheet<void>(builder: (context) {
-                  return _showBottomsheetMenu(context);
-                });
-              },
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    //MasukanFav(modelMenu);
-                    //print("Kliked");
-                  });
-                },
-                child: HeaderItem(
-                  images: modelMenu.image,
-                  title: modelMenu.name,
-                  textcolor: Colors.grey[600],
-                ),
-              )),
-        ],
-      ),
-    );
-  }
+
 
 
 
@@ -709,7 +665,7 @@ class HeaderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 100,
+        width: 80,
         height: 100,
         child: Stack(
           alignment: Alignment.center,
@@ -726,7 +682,7 @@ class HeaderItem extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: textcolor ?? Colors.white),
+                  style: TextStyle(color: textcolor ?? Colors.white, fontSize: 12),
                 ),
               ],
             ),

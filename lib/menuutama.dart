@@ -5,6 +5,7 @@ import 'package:bms_mobile/view/menu/akun.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 
+
 class MenuUtama extends StatefulWidget {
   @override
   _MenuUtamaState createState() => _MenuUtamaState();
@@ -38,14 +39,7 @@ class _MenuUtamaState extends State<MenuUtama> {
             icon: Icon(Icons.home_outlined),
             title: Text('Beranda', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.table_view_outlined),
-          //   title: Text('Data Tabel', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.info_outline_rounded),
-          //   title: Text('Infromasi', style: TextStyle(fontFamily: 'AirBnB', fontWeight: FontWeight.bold),),
-          // ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline_outlined),
             title: Text('Akun', style: TextStyle(fontFamily: 'AirBnB' , fontWeight: FontWeight.bold),),
