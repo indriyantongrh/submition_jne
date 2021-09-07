@@ -410,7 +410,7 @@ class _RegisterState extends State<Register> {
     print(ApiProvider.level);
 
     await ApiProvider.fetchregister();
-    new Future.delayed(new Duration(seconds: 1), () async {
+    new Future.delayed(new Duration(seconds: 3), () async {
       Navigator.of(context, rootNavigator: true).pop();
       await scaffold_state_register.currentState.showSnackBar(SnackBar(
         content: Text(
@@ -418,13 +418,17 @@ class _RegisterState extends State<Register> {
           textAlign: TextAlign.center,
           style: TextStyle(fontFamily: 'AirBnB'),
         ),
-        duration: Duration(seconds: 2),
+        ///duration: Duration(seconds: 2),
       ));
       if (ApiProvider.success == 1) {
         /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => SelectedRole()));*/
-        Navigator.of(context).pushReplacement(new MaterialPageRoute(
-            builder: (BuildContext context) => Login()));
+
+          Future.delayed(Duration(seconds: 1), (){
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) => Login()));
+          });
+
       } else {
         print(ApiProvider.message);
       }

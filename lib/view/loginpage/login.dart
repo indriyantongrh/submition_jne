@@ -295,7 +295,7 @@ class _LoginState extends State<Login> {
           textAlign: TextAlign.center,
           style: TextStyle(fontFamily: 'AirBnB'),
         ),
-        duration: Duration(seconds: 2),
+        ///duration: Duration(seconds: 2),
       ));
       if (ApiProvider.success == 1) {
         SharedPreferences pref = await SharedPreferences.getInstance();
@@ -304,8 +304,11 @@ class _LoginState extends State<Login> {
 
         /* Navigator.of(context).pushReplacement(new MaterialPageRoute(
             builder: (BuildContext context) => SelectedRole()));*/
-        Navigator.of(context).pushReplacement(new MaterialPageRoute(
-            builder: (BuildContext context) => MenuUtama()));
+        Future.delayed(Duration(seconds: 1), (){
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) => MenuUtama()));
+        });
+
       } else {
         print(ApiProvider.message);
       }
